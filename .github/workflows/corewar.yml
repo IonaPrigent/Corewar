@@ -35,7 +35,6 @@ jobs:
           fi
 
   push_to_mirror:
-    needs: [check_coding_style]
     if: ${{ github.event_name == 'push' }}
     name: "pushes all files to mirror specified"
     runs-on: ubuntu-latest
@@ -51,7 +50,6 @@ jobs:
             ${{ secrets.MARIUS_COREWAR_SSH }}
 
     push_to_mirror_iona:
-    needs: [check_coding_style]
     if: ${{ github.event_name == 'push' }}
     name: "pushes all IT files to mirror specified"
     runs-on: ubuntu-latest
