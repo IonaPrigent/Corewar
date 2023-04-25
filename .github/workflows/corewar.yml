@@ -1,0 +1,67 @@
+name: 'corewar'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  MIRROR_URL_MARIUS: "git@github.com:EpitechPromo2027/B-CPE-200-PAR-2-1-corewar-marius.rousset.git"
+  MIRROR_URL_IONA: "git@github.com:EpitechPromo2027/B-CPE-200-PAR-2-2-corewar-etienne.namur.git"
+
+jobs:
+  check_coding_style:
+    name: "check for coding style errors"
+    runs-on: ubuntu-latest
+    container: ghcr.io/epitech/coding-style-checker:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          check.sh $(pwd) $(pwd)
+          cat coding-style-reports.log | while read LINE; do
+            TYPE=$(echo $LINE | cut -d ':' -f 3 | tr -d ' ')
+            FILE=$(echo $LINE | cut -d ':' -f 1)
+            AT=$(echo $LINE | cut -d ':' -f 2)
+            CODE=$(echo $LINE | cut -d ':' -f 4)
+            BANANA=$(echo "$TYPE coding style error: $FILE#L$AT")
+            echo "::error file=$FILE,line=$AT,title=$TYPE coding style error::$CODE"
+          done
+          if [[ "$(cat coding-style-reports.log)" != "" ]]
+          then
+            exit 1
+          fi
+
+  push_to_mirror:
+    needs: [check_coding_style]
+    if: ${{ github.event_name == 'push' }}
+    name: "pushes all files to mirror specified"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL_MARIUS }}
+          ssh_private_key:
+            ${{ secrets.MARIUS_COREWAR_SSH }}
+
+    push_to_mirror_iona:
+    needs: [check_coding_style]
+    if: ${{ github.event_name == 'push' }}
+    name: "pushes all IT files to mirror specified"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL_IONA }}
+          ssh_private_key:
+            ${{ secrets.IT_COREWAR_SSH }}
