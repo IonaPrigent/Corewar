@@ -50,16 +50,16 @@ jobs:
             ${{ secrets.MARIUS_COREWAR_SSH }}
 
     push_to_mirror_iona:
-    if: ${{ github.event_name == 'push' }}
-    name: "pushes all IT files to mirror specified"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: pixta-dev/repository-mirroring-action@v1
-        with:
-          target_repo_url:
-            ${{ env.MIRROR_URL_IONA }}
-          ssh_private_key:
-            ${{ secrets.IT_COREWAR_SSH }}
+      if: ${{ github.event_name == 'push' }}
+      name: "pushes all IT files to mirror specified"
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+        - uses: pixta-dev/repository-mirroring-action@v1
+          with:
+            target_repo_url:
+              ${{ env.MIRROR_URL_IONA }}
+            ssh_private_key:
+              ${{ secrets.IT_COREWAR_SSH }}
