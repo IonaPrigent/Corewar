@@ -15,5 +15,3 @@
 char *open_file(char const *file_name);
 
 #endif /* !ASM_H_ */
-
-
