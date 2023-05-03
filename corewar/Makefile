@@ -5,13 +5,13 @@
 ## Makefile
 ##
 
-CFLAGS += -Wall -Wextra -pedantic -std=c99
-
-BASE_SRC	=
+CFLAGS += -Wall -Wextra
 
 CPPFLAGS	+=	-I./include
 
 LDFLAGS	+= -L./lib/my -lmy
+
+BASE_SRC	=
 
 SRC	=	$(BASE_SRC)	\
 		src/main.c
@@ -33,8 +33,10 @@ clean:
 fclean:	clean
 	rm -f $(NAME)
 
-debug: CFLAGS += -g
-debug: $(NAME)
+debug:	CFLAGS += -g3 -fsanitize=address
+debug:	CC = clang
+debug:	LDFLAGS += -fsanitize=address
+debug:	re
 
 re:	fclean all
 
