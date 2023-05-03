@@ -40,44 +40,41 @@ typedef char args_type_t;
                                     into r1 (4 bytes )) */
     #define T_LAB           8       /* LABEL */
 
-struct op_s {
-    char *mnemonique;
+typedef struct op_s {
+    char *mnemonique;   /* assembly name for the command */
     char nbr_args;
     args_type_t type[MAX_ARGS_NUMBER];
-    char code;
-    int nbr_cycles;
+    char code;  /* int between [1-16] */
+    int nbr_cycles; /* command explication */
     char *comment;
-};
-
-typedef struct op_s     op_t;
+} op_t;
 
 /*
 ** size (in bytes)
 */
     #define IND_SIZE        2
     #define DIR_SIZE        4
-    #define REG_SIZE        DIR_SIZE
+    #define REG_SIZE        DIR_SIZE    /* reg_size = 1 byte = [1-16] */
+                                        /* register contain 4 byte of data */
 
 /*
 ** op_tab
 */
-extern op_t op_tab[];
+extern op_t op_tab[];   /* operation definition (aka args + type args) */
 
 /*
 ** header
 */
     #define PROG_NAME_LENGTH        128
     #define COMMENT_LENGTH          2048
+    #define COREWAR_EXEC_MAGIC      0xea83f3    /* confirm redskin code */
 
-struct header_s {
-    int  magic;
-    #define COREWAR_EXEC_MAGIC      0xea83f3        /* why not */
+typedef struct header_s {
+    int magic;  /* redskin code confirmed */
     char prog_name[PROG_NAME_LENGTH + 1];
     int prog_size;
     char comment[COMMENT_LENGTH + 1];
-};
-
-typedef struct header_s header_t;
+} header_t;
 
 /*
 ** live
