@@ -13,5 +13,7 @@
     #include <stdbool.h>
 
 char *open_file(char const *file_name);
+void quotes_conditions(char *buf);
+int my_strcmp(char const *s1, char const *s2);
 
 #endif /* !ASM_H_ */

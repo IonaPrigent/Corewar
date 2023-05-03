@@ -7,11 +7,15 @@
 
 CFLAGS += -Wall -Wextra -pedantic -std=c99
 
-BASE_SRC	=	src/open_file.c		\
-
 CPPFLAGS	+=	-I./include
 
-LDFLAGS	+= -L./lib/my -lmy
+LDFLAGS	=	-L./lib/my
+
+LDLIBS	=	-lmy
+
+BASE_SRC	=	src/open_file.c			\
+				src/errors_header.c		\
+				src/parsing_header.c	\
 
 SRC	=	$(BASE_SRC)	\
 		src/main.c
@@ -25,13 +29,17 @@ CC	=	gcc
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	$(CC) -o $(NAME) $(OBJ)
+	make -C ./lib/my
+	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 clean:
+	make clean -C ./lib/my
 	rm -f $(OBJ)
 
 fclean:	clean
+	make fclean -C ./lib/my
 	rm -f $(NAME)
+	$(RM) vgcore*
 
 debug: CFLAGS += -g
 debug: $(NAME)

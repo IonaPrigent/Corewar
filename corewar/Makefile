@@ -7,11 +7,9 @@
 
 CFLAGS += -Wall -Wextra -pedantic -std=c99
 
-BASE_SRC	=
-
 CPPFLAGS	+=	-I./include
 
-LDFLAGS	+= -L./lib/my -lmy
+BASE_SRC	=
 
 SRC	=	$(BASE_SRC)	\
 		src/main.c
@@ -32,6 +30,7 @@ clean:
 
 fclean:	clean
 	rm -f $(NAME)
+	$(RM) vgcore*
 
 debug: CFLAGS += -g
 debug: $(NAME)
