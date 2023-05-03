@@ -36,7 +36,7 @@ fclean:	clean
 debug:	CFLAGS += -g3 -fsanitize=address
 debug:	CC = clang
 debug:	LDFLAGS += -fsanitize=address
-debug:	re	
+debug:	re
 
 re:	fclean all
 
