@@ -1,0 +1,24 @@
+# IDE
+/.vscode/
+
+# Lib
+*.a
+
+# Compilation
+*.o
+
+# Banana
+*.log
+
+# EMACS Residual
+*~
+*#
+\#*
+.#*
+
+# Unit Tests
+*.gcda
+*.gcno
+
+#Valgrind
+vgcore*
