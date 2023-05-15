@@ -7,7 +7,10 @@
 
 #include "core_type.h"
 
-#pragma once
+#ifndef COREWAR_PROTO_H_
+    #define COREWAR_PROTO_H_
 
-int vm_core(void);
+int vm_core(int ac, char **av);
 void display_memory(octet_t memory[]);
+
+#endif /* !COREWAR_PROTO_H_ */
