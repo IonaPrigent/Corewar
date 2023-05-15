@@ -7,7 +7,7 @@
 
 CFLAGS += -Wall -Wextra
 
-CPPFLAGS	+=	-I./include
+CPPFLAGS	+=	-iquote ./include
 
 LDFLAGS	+= -L./lib/my -lmy
 
