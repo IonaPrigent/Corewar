@@ -42,7 +42,7 @@ static void print_line_octet(octet_t *line)
 
 void display_memory(octet_t memory[])
 {
-    for (int i = 0; i < SIZE_ARENA; i += 0x20) {
+    for (int i = 0; i < MEM_SIZE; i += 0x20) {
         display_column(i);
         print_line_octet(memory + i);
         write(1, "\n", 1);

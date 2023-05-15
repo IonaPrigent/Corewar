@@ -18,6 +18,7 @@ SRC_LIB		=	$(addprefix lib/my/,	\
 				my_strcmp.c				\
 				my_puthex.c				\
 				my_putoct.c				\
+				my_getnbr.c				\
 				)
 
 SRC	=	$(addprefix src/,	\

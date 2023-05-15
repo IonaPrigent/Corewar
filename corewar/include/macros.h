@@ -10,7 +10,7 @@
 
     #define EXIT_ERROR 84
     #define SUCESS 0
-    #define ERROR 84
-    #define SIZE_ARENA 0x1800
+    #define ERROR -1
+    #define NO_DUMP -1
 
 #endif /* !MACROS_H_ */

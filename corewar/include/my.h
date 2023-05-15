@@ -11,5 +11,6 @@
 int my_strcmp(char const *s1, char const *s2);
 void my_puthex(unsigned int nb);
 void my_putoct(unsigned int nb);
+int my_getnbr(char const *str);
 
 #endif /* !MY_H_ */
