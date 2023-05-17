@@ -34,6 +34,7 @@ BASE_SRC	=	vm_core.c			\
 				display_memory.c	\
 				check_flag.c		\
 				exec_instruction.c	\
+				init.c				\
 				get_value.c			\
 
 SRC_LIB		=	$(addprefix lib/my/,	\

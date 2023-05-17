@@ -46,15 +46,6 @@ void read_name(int const fd, process_t *process)
     process->name[len_name - 1] = c;
 }
 
-static int init_all(process_t **all_champ, octet_t arena[MEM_SIZE],
-int ac, char const *av[])
-{
-    for (int i = 0; i < MEM_SIZE; ++i) {
-        arena[i] = 0;
-    }
-    return SUCESS;
-}
-
 int vm_core(int ac, char const *av[])
 {
     octet_t arena[MEM_SIZE];
