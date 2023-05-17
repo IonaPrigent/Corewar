@@ -5,6 +5,7 @@
 ** sti
 */
 
+#include "corewar_proto.h"
 #include "core_type.h"
 #include "macros.h"
 
@@ -16,6 +17,9 @@ static void place_memory(char memory[MEM_SIZE], int value, int idx)
         memory[idx + i] = value >> (3 - i) * sizeof(octet_t) & cache;
     }
 }
+
+static int get_value_param_one(void)
+{}
 
 int sti(char memory[MEM_SIZE], process_t *process)
 {
@@ -35,6 +39,7 @@ int sti(char memory[MEM_SIZE], process_t *process)
         i += T_REG;
         break;
     case PARAM_IND:
+        index += get_value_from_indirect(memory + i);
         i += IND_SIZE;
         break;
     default:
