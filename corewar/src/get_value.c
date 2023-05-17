@@ -8,7 +8,7 @@
 #include "core_type.h"
 #include "op.h"
 
-int get_value_from_indirect(char *memory)
+int get_value_from_indirect(octet_t const *memory)
 {
     int value = 0;
 
@@ -19,7 +19,7 @@ int get_value_from_indirect(char *memory)
     return value;
 }
 
-int get_value_from_direct(char *memory)
+int get_value_from_direct(octet_t const *memory)
 {
     int value = 0;
 

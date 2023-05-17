@@ -21,6 +21,7 @@ typedef struct process {
     char *name;
     int PC;
     int wait;
+    int ID;
     int registers[REG_NUMBER];
 } process_t;
 
