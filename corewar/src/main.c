@@ -7,7 +7,7 @@
 
 #include "corewar_proto.h"
 
-int main(int ac, char **av)
+int main(int ac, char const *av[])
 {
     return vm_core(ac, av);
 }

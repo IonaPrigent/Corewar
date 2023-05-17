@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include "core_type.h"
 #include "op.h"
 #include "macros.h"
@@ -17,19 +18,18 @@
 
 static int helper(void)
 {
-    char msg[] = "USAGE\n\t./corewar [-dump nbr_cycle] [[-n prog_number] "\
-            "[-a load_address] prog_name] ...\nDESCRIPTION\n\t"\
-            "-dump nbr_cycle : dumps the memory after the nbr_cycle execution "\
-            "(if the round isn’t already over)\n\twith the following format: 32 "\
-            "bytes/line in hexadecimal (A0BCDEFE1DD3...)\n\t-n prog_number"\
-            " sets the next program’s number.\n\tBy default, the first free "\
-            "number in the parameter order\n\t-a load_address sets the "\
-            "next program's loading address.\n\tWhen no address is specified, "\
-            "optimize the addresses so\n\tthat the processes are as far away "\
-            "from each other as possible. The addresses are MEM_SIZE modulo.\n";
+    int fd = open("assets/helper", O_RDONLY);
+    char c;
 
-    write(1, msg, sizeof(msg) / sizeof(char));
-    return 0;
+    if (fd == -1) {
+        my_putstr("no helper found\n");
+        return EXIT_ERROR;
+    }
+    while (read(fd, &c, 1) == 1) {
+        write(STDOUT_FILENO, &c, 1);
+    }
+    close(fd);
+    return SUCESS;
 }
 
 void read_name(int const fd, process_t *process)
@@ -46,14 +46,27 @@ void read_name(int const fd, process_t *process)
     process->name[len_name - 1] = c;
 }
 
-int vm_core(int ac, char const *av[])
+static int init_all(process_t **all_champ, octet_t arena[MEM_SIZE],
+int ac, char const *av[])
 {
-    octet_t arena[MEM_SIZE];
-
-    if (ac == 1)
-        return helper();
     for (int i = 0; i < MEM_SIZE; ++i) {
         arena[i] = 0;
     }
+    return SUCESS;
+}
+
+int vm_core(int ac, char const *av[])
+{
+    octet_t arena[MEM_SIZE];
+    process_t *all_champ = NULL;
+
+    if (ac == 2 && my_strcmp(av[1], "-h") == 0)
+        return helper();
+    else if (ac < 3)
+        return EXIT_ERROR;
+    if (init_all(&all_champ, arena, ac, av) == ERROR)
+        return EXIT_ERROR;
+
+    display_memory(arena);
     return SUCESS;
 }

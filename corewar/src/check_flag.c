@@ -6,14 +6,15 @@
 */
 
 #include "macros.h"
+#include "my.h"
 
-int is_dash_dump_on(char const *av[], int ac)
+int is_dash_dump_on(char const *av[])
 {
     int nbr_cycle = 0;
 
     if (my_strcmp(av[2], "-dump") == 0) {
-       nbr_cycle = my_getnbr(av[3]);
-       return nbr_cycle;
+        nbr_cycle = my_getnbr(av[3]);
+        return nbr_cycle;
     }
     return -1;
 }
