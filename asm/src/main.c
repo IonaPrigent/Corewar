@@ -5,39 +5,46 @@
 ** main
 */
 
-#include "op.h"
 #include "asm.h"
-#include <unistd.h>
 
-static void testing(header_t *header)
+static header_t * init_header(void)
 {
-    char name[PROG_NAME_LENGTH] = "hey";
-    char comment[COMMENT_LENGTH] = "hello";
-    header->magic = 0xea83f3;
-    header->prog_size = 22;
+    header_t * header = malloc(sizeof(header_t));
+    int magic = big_endian(COREWAR_EXEC_MAGIC);
+    int prog_size = big_endian(22); // 22 bytes (abel) need to guess why
+    char prog_name[] = "Abel";
+    char comment[] = "L'amer noir.";
 
-    for (int i = 0; i < PROG_NAME_LENGTH; i++)
-        header->prog_name[i] = 0x0;
-    for (int i = 0; i < COMMENT_LENGTH; i++)
-        header->comment[i] = 0x0;
+    mem_set(header->prog_name, 0, sizeof(header->prog_name));
+    mem_set(header->comment, 0, sizeof(header->comment));
 
-    for (int i = 0; name[i] != '\0'; i++)
-        header->prog_name[i] = name[i];
-    for (int i = 0; comment[i] != '\0'; i++)
-        header->comment[i] = comment[i];
+    header->magic = magic;
+    header->prog_size = prog_size; 
+    mem_cpy(header->prog_name, prog_name, sizeof(prog_name));
+    mem_cpy(header->comment, comment, sizeof(comment));
+
+    return header;
 }
 
-int main(int ac, char **av)
+static void write_header(header_t * h)
 {
-    char *buffer = NULL;
-    header_t header;
+    FILE * file = fopen("test.cor", "w");
 
-    testing(&header);
-    if (ac == 1) {
-        buffer = open_file(av[1]);
-    }
-    if (ac > 2 || ac < 2)
-        return ERROR;
-    write(1, &header, sizeof(header_t));
+    // fwrite(&(h->magic), sizeof(h->magic), 1, file);
+    // fwrite(h->prog_name, sizeof(char), PROG_NAME_LENGTH + 1, file);
+    // fwrite(&(h->prog_size), sizeof(h->prog_size), 1, file);
+    // fwrite(h->comment, sizeof(char), COMMENT_LENGTH + 1, file);
+    fwrite(h, sizeof(header_t), 1, file);
+
+    fclose(file);
+}
+
+int main(void)
+{
+    header_t * header = init_header();
+
+    write_header(header);
+    free(header);
+
     return 0;
 }

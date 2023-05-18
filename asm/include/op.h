@@ -5,8 +5,8 @@
 ** op
 */
 
-#ifndef _OP_H_
-    #define _OP_H_
+#ifndef OP_H
+    #define OP_H
 
     #define MEM_SIZE          (6 * 1024)
     #define IDX_MOD           (512) /* modulo of the index < */
@@ -44,7 +44,7 @@ typedef struct op_s {
     char *mnemonique;   /* assembly name for the command */
     char nbr_args;
     args_type_t type[MAX_ARGS_NUMBER];
-    char code;  /* int between [1-16] */
+    char code;  /* int between [1-16] the command index */
     int nbr_cycles; /* command explication */
     char *comment;
 } op_t;
@@ -83,4 +83,4 @@ typedef struct header_s {
     #define CYCLE_DELTA     5
     #define NBR_LIVE        40
 
-#endif
+#endif /* OP_H */
