@@ -27,12 +27,18 @@ static int get_nb_processes(int ac, char **av)
     return nb_processes;
 }
 
-int init_single_process(process_t *all_champ, octet_t arena[MEM_SIZE])
+static int init_single_process(process_t *all_champ, octet_t arena[MEM_SIZE],
+int a)
 {
     all_champ->wait = 0;
     all_champ->name = 0;
     all_champ->PC = 0;
-    all_champ->registers = 0;
+
+    for (int i = 0; all_champ->registers[i]; i++) {
+        if (i = 0)
+            all_champ->registers[i] = a;
+        all_champ->registers[i] = 0;
+    }
 
 }
 
@@ -42,8 +48,8 @@ int ac, char const *av[])
     int nb_process = get_nb_processes(ac, av);
     *all_champ = malloc(sizeof(process_t) * nb_process);
 
-    for (int i = 0; all_champ[i]; i++)
-        init_single_process(all_champ[i], arena);
+    for (int a = 0; all_champ[a]; a++)
+        init_single_process(all_champ[a], arena, a);
 
     for (int i = 0; i < MEM_SIZE; ++i) {
         arena[i] = 0;

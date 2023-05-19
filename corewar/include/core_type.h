@@ -21,7 +21,6 @@ typedef struct process {
     char *name;
     int PC;
     int wait;
-    int ID;
     int registers[REG_NUMBER];
 } process_t;
 
@@ -37,7 +36,7 @@ typedef struct process {
 
 enum INSTRUCTIONS_NAME {
     LIVE,
-    LD, 
+    LD,
     ST,
     ADD,
     SUB,
