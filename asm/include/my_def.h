@@ -10,15 +10,14 @@
 
     #include "my_object.h"
 
-    #define UNUSED __attribute__((unused))
-    #define AUTOFREE __attribute__((cleanup(auto_free)))
+    #define AUTOFREE    __attribute__((cleanup(auto_free)))
+    #define UNUSED      __attribute__((unused))
 
     #define STR(s)      create(STR, s)
     #define VEC(t, n)   create(VEC, t, n)
     #define LIST(n)     create(LIST, n)
     #define DICT(n)     create(DICT, n)
 
-    #define TOSTR(c) ((char[]){c, '\0'})
-    #define ABS(x) (((x) < 0) ? -(x) : (x))
+    #define ABS(x)      (((x) < 0) ? -(x) : (x))
 
 #endif /* MY_DEF */

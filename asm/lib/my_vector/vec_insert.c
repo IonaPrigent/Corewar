@@ -28,7 +28,6 @@ void * vec_insert(void ** ptr, va_list ap)
     } else if (index > vec->len) {
         index = vec->len;
     }
-
     mem_cpy(vec->data + index * vec->size_data, data, vec->size_data);
     vec->len += 1;
 

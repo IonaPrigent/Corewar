@@ -20,7 +20,6 @@ str_t * str_insert(str_t ** ptr, va_list ap)
     if (str->len + len_data + 1 > str->cap) {
         str = str_resize(ptr, str->len + len_data + 1);
     }
-
     if (index < str->len) {
         for (size_t n = str->len - 1 + len_data; n > index; n--) {
             str->data[n] = str->data[n - len_data];
@@ -28,7 +27,6 @@ str_t * str_insert(str_t ** ptr, va_list ap)
     } else if (index > str->len) {
         index = str->len;
     }
-
     mem_cpy(str->data + index, data, len_data);
     str->len += len_data;
     str->data[str->len] = '\0';

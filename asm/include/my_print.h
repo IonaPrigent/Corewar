@@ -11,6 +11,8 @@
     #include "my_object.h"
     #include "my_def.h"
 
+    #define TOSTR(c)    ((char[]){c, '\0'})
+
 typedef struct formater_s {
     char type;
     void (* add) (str_t **, va_list);

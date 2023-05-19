@@ -28,10 +28,10 @@ enum OBJECT {
  *
  * @param type [ STR , VEC , LIST , DICT ]
  *
- * @param STR  [data]
- * @param VECT [data size, len]
- * @param LIST [len]
- * @param DICT [nb buckets]
+ * @param STR  [DATA: char *]
+ * @param VECT [DATASIZE: int, LEN: size_t]
+ * @param LIST [LEN: size_t]
+ * @param DICT [NBUCKETS: size_t]
  *
  * @return a new object
 */
@@ -42,9 +42,10 @@ void * create(int type, ...);
  *
  * @param ptr object pointer
  *
- * @param VECT [data]
- * @param LIST [data]
- * @param DICT [key, value]
+ * @param STR  [DATA: char *]
+ * @param VECT [DATA: void *]
+ * @param LIST [DATA: void *]
+ * @param DICT [KEY: char *, VALUE: void *]
  *
  * @return the object
 */
@@ -55,9 +56,10 @@ void * append(void * ptr, ...);
  *
  * @param ptr object pointer
  *
- * @param VECT [index, data]
- * @param LIST [index, data]
- * @param DICT [key, value]
+ * @param STR  [INDEX: size_t, DATA: char *]
+ * @param VECT [INDEX: size_t, DATA: void *]
+ * @param LIST [INDEX: size_t, DATA: void *]
+ * @param DICT [KEY: char *, VALUE: void *]
  *
  * @return the object
 */
@@ -68,9 +70,10 @@ void * insert(void * ptr, ...);
  *
  * @param obj object
  *
- * @param VECT [index, data]
- * @param LIST [index, data]
- * @param DICT [key, value]
+ * @param STR  [INDEX: size_t, DATA: char *]
+ * @param VECT [INDEX: size_t, DATA: void *]
+ * @param LIST [INDEX: size_t, DATA: void *]
+ * @param DICT [KEY: char *, VALUE: void *]
  *
  * @return the object
 */
@@ -81,9 +84,10 @@ void * update(void * ptr, ...);
  *
  * @param ptr object
  *
- * @param obj VECT [index]
- * @param obj LIST [index]
- * @param obj DICT [key]
+ * @param STR  [INDEX: size_t]
+ * @param VECT [INDEX: size_t]
+ * @param LIST [INDEX: size_t]
+ * @param DICT [KEY: char *]
  *
  * @return the object
 */
