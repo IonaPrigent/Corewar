@@ -32,7 +32,7 @@ static void add_element(str_t ** str, va_list ap, char type)
     int i = 0;
 
     if (type == '%') {
-        append(str, TOSTR(va_arg(ap, int)));
+        append(str, TOSTR((char) va_arg(ap, int)));
         return;
     }
 

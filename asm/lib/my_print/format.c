@@ -10,7 +10,7 @@
 
 void add_chr(str_t ** str, va_list ap)
 {
-    append(str, TOSTR(va_arg(ap, int)));
+    append(str, TOSTR((char) va_arg(ap, int)));
 }
 
 void add_str(str_t ** str, va_list ap)
