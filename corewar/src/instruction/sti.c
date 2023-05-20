@@ -9,41 +9,36 @@
 #include "core_type.h"
 #include "macros.h"
 
-static void place_memory(char memory[MEM_SIZE], int value, int idx)
+void place_memory(char memory[MEM_SIZE], int value, int idx)
 {
     int cache = 0xff;
 
     for (int i = 0; i < REG_SIZE; ++i) {
-        memory[idx + i] = value >> (3 - i) * sizeof(octet_t) & cache;
+        memory[idx + i % MEM_SIZE] = value >> (3 - i) * sizeof(octet_t) & cache;
     }
 }
 
-static int get_value_param_one(void)
-{}
-
-int sti(char memory[MEM_SIZE], process_t *process)
+int store_index(char memory[MEM_SIZE], process_t *process)
 {
-    octet_t parameters = memory[process->PC + 1];
-    int index = process->PC;
+    octet_t parameters = PARAMETERS(memory, process->PC);
+    int index = 0;
     int value = 0;
     int i = 2;
 
+    if (process->wait < 25) {
+        return SUCESS;
+    }
     if (FSRT_PARAM(parameters) != PARAM_REG) {
         return ERROR;
     }
     value = process->registers[memory[process->PC + i] - 1];
-    i += T_REG;
-    switch (SECO_PARAM(parameters)) {
-    case PARAM_REG:
-        index += process->registers[memory[process->PC + i] - 1];
-        i += T_REG;
-        break;
-    case PARAM_IND:
-        index += get_value_from_indirect(memory + i);
-        i += IND_SIZE;
-        break;
-    default:
-        break;
-    }
+    i += REG_LEN;
+    index += get_value_from_param_ind(memory, SECO_PARAM(parameters),
+    process->registers, &i);
+    index += get_value_from_param_ind(memory, THRD_PARAM(parameters),
+    process->registers, &i);
+    index = (index % IDX_MOD + process->PC) % MEM_SIZE;
+    place_memory(memory, value, index);
+    reset_process(process, i);
     return SUCESS;
 }
