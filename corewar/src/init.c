@@ -19,8 +19,14 @@
 
 static char **parse_cor_file(char *filename)
 {
-    header_t *programm = malloc(sizeof(header_t));
+    header_t *program = malloc(sizeof(header_t));
     int fd = open(filename, O_RDONLY);
+
+    if (fd == -1 || check_magic_number(fd, program))
+        return NULL;
+    get_prog_name(fd, program);
+    get_prog_size(fd, program);
+    get_program(fd, program);
 
     return NULL;
 }

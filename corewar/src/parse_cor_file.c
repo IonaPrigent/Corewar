@@ -51,7 +51,7 @@ int get_prog_size(int fd, header_t *program)
     return 0;
 }
 
-int get_programm(int fd, header_t *program)
+int get_program(int fd, header_t *program)
 {
     char c;
     char p_core[program->prog_size];
