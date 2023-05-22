@@ -10,7 +10,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "core_type.h"
+#include "corewar_macros.h"
+#include "corewar_type.h"
 #include "op.h"
 #include "macros.h"
 #include "corewar_proto.h"

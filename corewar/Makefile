@@ -36,6 +36,7 @@ BASE_SRC	=	vm_core.c			\
 				exec_instruction.c	\
 				init.c				\
 				get_value.c			\
+				set_register.c		\
 
 SRC_LIB		=	$(addprefix lib/my/,	\
 				my_strcmp.c				\

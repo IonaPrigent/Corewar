@@ -10,7 +10,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "core_type.h"
+#include "corewar_macros.h"
+#include "corewar_type.h"
 #include "op.h"
 #include "macros.h"
 #include "corewar_proto.h"
@@ -27,7 +28,7 @@ static int get_nb_processes(int ac, char **av)
     return nb_processes;
 }
 
-static int init_single_process(process_t *all_champ, octet_t arena[MEM_SIZE],
+static int init_single_process(process_t *all_champ, octet_t memory[MEM_SIZE],
 int a)
 {
     all_champ->wait = 0;
@@ -39,20 +40,20 @@ int a)
             all_champ->registers[i] = a;
         all_champ->registers[i] = 0;
     }
-
+    return SUCESS;
 }
 
-int init_all(process_t **all_champ, octet_t arena[MEM_SIZE],
+int init_all(process_t **all_champ, octet_t memory[MEM_SIZE],
 int ac, char const *av[])
 {
     int nb_process = get_nb_processes(ac, av);
     *all_champ = malloc(sizeof(process_t) * nb_process);
 
     for (int a = 0; all_champ[a]; a++)
-        init_single_process(all_champ[a], arena, a);
+        init_single_process(all_champ[a], memory, a);
 
     for (int i = 0; i < MEM_SIZE; ++i) {
-        arena[i] = 0;
+        memory[i] = 0;
     }
     return SUCESS;
 }

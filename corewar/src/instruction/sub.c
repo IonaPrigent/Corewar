@@ -5,17 +5,20 @@
 ** sub
 */
 
-#include "core_type.h"
+#include <stdbool.h>
+#include "corewar_macros.h"
+#include "corewar_type.h"
 #include "corewar_proto.h"
 #include "macros.h"
 
-int add(octet_t memory[MEM_SIZE], process_t *process)
+int sub(octet_t memory[MEM_SIZE], process_t *process)
 {
     int i = 2;
     octet_t parameters = PARAMETERS(memory, process->PC);
     int reg_id1 = 0;
     int reg_id2 = 0;
     int reg_id3 = 0;
+    int result = 0;
 
     if (process->wait < 10)
         return SUCESS;
@@ -26,9 +29,8 @@ int add(octet_t memory[MEM_SIZE], process_t *process)
     reg_id1 = GET_OCTET(memory, process->PC, i);
     reg_id2 = GET_OCTET(memory, process->PC, i + 1);
     reg_id3 = GET_OCTET(memory, process->PC, i + 2);
-    process->registers[reg_id3] =
-    process->registers[reg_id1] - process->registers[reg_id2];
-    i += 2;
-    reset_process(process, i);
+    result = process->registers[reg_id1] - process->registers[reg_id2];
+    set_register(process, reg_id3, result, true);
+    reset_process(process, i + 3);
     return SUCESS;
 }

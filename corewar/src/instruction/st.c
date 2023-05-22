@@ -6,7 +6,8 @@
 */
 
 #include "corewar_proto.h"
-#include "core_type.h"
+#include "corewar_macros.h"
+#include "corewar_type.h"
 #include "macros.h"
 
 static void store_in_reg(int registers[REG_NUMBER], int value, int reg)

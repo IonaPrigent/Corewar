@@ -5,7 +5,7 @@
 ** instruction
 */
 
-#include "core_type.h"
+#include "corewar_type.h"
 
 #ifndef INSTRUCTION_H_
     #define INSTRUCTION_H_
