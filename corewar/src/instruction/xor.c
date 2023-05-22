@@ -20,7 +20,7 @@ int xor(octet_t memory[MEM_SIZE], process_t *process)
     int reg_id3 = 0;
     int result = 0;
 
-    if (process->wait < 10)
+    if (process->wait < 6)
         return SUCESS;
     if (THRD_PARAM(parameters) != PARAM_REG
     || SECO_PARAM(parameters) != PARAM_REG
