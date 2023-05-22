@@ -101,6 +101,11 @@ champ_t * parse_asm(const char * filename)
     header = get_header(text, &index);
     if (header == NULL)
         return NULL;
+    // // command = get_command(text, index);
+    // if (command == NULL) {
+    //     free(header);
+    //     return NULL;
+    // }
     champ = malloc(sizeof(champ_t));
     champ->hdr = header;
     champ->cmd = command;
