@@ -33,6 +33,7 @@ int get_value_from_dir(octet_t const *memory, int *i)
 
 void reset_process(process_t *process, int i)
 {
+    ++i;
     process->PC = REPLACE_PC(process->PC, i);
     process->wait = 0;
 }

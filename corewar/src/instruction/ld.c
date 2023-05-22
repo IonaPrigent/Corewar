@@ -9,7 +9,7 @@
 #include "core_type.h"
 #include "macros.h"
 
-int load(char memory[MEM_SIZE], process_t *process)
+int load(octet_t memory[MEM_SIZE], process_t *process)
 {
     int index = 0;
     int i = 2;

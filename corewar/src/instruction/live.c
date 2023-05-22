@@ -9,7 +9,7 @@
 #include "core_type.h"
 #include "corewar_proto.h"
 
-int live(char memory[MEM_SIZE], process_t *process)
+int live(octet_t memory[MEM_SIZE], process_t *process)
 {
     int i = 1;
     int player_number = 0;

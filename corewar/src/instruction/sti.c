@@ -18,7 +18,7 @@ void place_memory(char memory[MEM_SIZE], int value, int idx)
     }
 }
 
-int store_index(char memory[MEM_SIZE], process_t *process)
+int store_index(octet_t memory[MEM_SIZE], process_t *process)
 {
     octet_t parameters = PARAMETERS(memory, process->PC);
     int index = 0;
