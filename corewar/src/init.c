@@ -16,6 +16,17 @@
 #include "corewar_proto.h"
 #include "my.h"
 
+static char **parse_cor_file(char *filename, char **process_info)
+{
+    char c;
+    int fd = open(filename, O_RDONLY);
+
+    if (fd == -1)
+        return NULL;
+
+    while (read(fd, &c, 1) != 1)
+}
+
 static int get_nb_processes(int ac, char **av)
 {
     int nb_processes = 0;
