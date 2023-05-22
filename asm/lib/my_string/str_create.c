@@ -31,8 +31,8 @@ str_t * str_create(va_list ap)
 
 str_t * str_ncreate(va_list ap)
 {
-    size_t len = va_arg(ap, size_t);
     char * data = va_arg(ap, char *);
+    size_t len = va_arg(ap, size_t);
 
     return string_create(data, len);
 }

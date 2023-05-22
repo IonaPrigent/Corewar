@@ -10,14 +10,19 @@
 
     #include "my_object.h"
 
-    #define AUTOFREE    __attribute__((cleanup(auto_free)))
-    #define UNUSED      __attribute__((unused))
+    #define AUTOFREE        __attribute__((cleanup(auto_free)))
+    #define UNUSED          __attribute__((unused))
 
-    #define STR(s)      create(STR, s)
-    #define VEC(t, n)   create(VEC, t, n)
-    #define LIST(n)     create(LIST, n)
-    #define DICT(n)     create(DICT, n)
+    #define STR(str)        create(STR, str)
+    #define VEC(type, len)  create(VEC, type, len) // type = sizeof(type)
+    #define LIST(len)       create(LIST, len)
+    #define DICT(len)       create(DICT, len)
 
-    #define ABS(x)      (((x) < 0) ? -(x) : (x))
+    #define NSTR(str, len)  create(STR + 0.1, str, len)
+
+    #define ABS(x)  (((x) < 0) ? -(x) : (x))
+
+    #define TRUE    1
+    #define FALSE   0
 
 #endif /* MY_DEF */

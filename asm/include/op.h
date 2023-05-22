@@ -84,3 +84,15 @@ typedef struct header_s {
     #define NBR_LIVE        40
 
 #endif /* OP_H */
+
+/**
+ * coding byte value:
+ * other:    00 // less than 4 params
+ * register: 01
+ * direct:   10
+ * indirect: 11
+ *
+ * exception:
+ * no coding byte because they only take one param of the same type:
+ * live, zjmp, fork and lfork
+*/

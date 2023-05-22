@@ -20,16 +20,20 @@ void add_str(str_t ** str, va_list ap)
 
 void add_int(str_t ** str, va_list ap)
 {
-    AUTOFREE str_t * tmp = STR(my_itoa(va_arg(ap, int)));
+    char * nbr = my_itoa(va_arg(ap, int));
+    AUTOFREE str_t * tmp = STR(nbr);
 
     append(str, tmp->data);
+    free(nbr);
 }
 
 void add_flt(str_t ** str, va_list ap)
 {
-    AUTOFREE str_t * tmp = STR(my_ftoa(va_arg(ap, double), 6));
+    char * nbr = my_ftoa(va_arg(ap, double), 6);
+    AUTOFREE str_t * tmp = STR(nbr);
 
     append(str, tmp->data);
+    free(nbr);
 }
 
 void add_obj(str_t ** str, va_list ap)

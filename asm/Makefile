@@ -36,7 +36,7 @@ SRC			=	$(wildcard $(SRC_DIR)/*.c)
 LIB_OBJ		=	$(LIB:.c=.o)
 SRC_OBJ		=	$(SRC:.c=.o)
 
-BIN_NAME	=	my_lib
+BIN_NAME	=	asm
 LIB_NAME	=	$(LIB_DIR)/libmy.a
 
 

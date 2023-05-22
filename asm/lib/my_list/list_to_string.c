@@ -12,17 +12,14 @@ str_t * list_to_string(list_t * list, str_t ** buff)
     str_t * str = NULL;
 
     if (buff == NULL) {
-        str = create(STR, "[");
+        str = create(STR, "[\n");
     } else {
         str = * buff;
-        append(&str, "[");
+        append(&str, "[\n");
     }
     for (size_t i = 0; i < list->len; i++) {
         string(list->data[i], &str);
-        append(&str, ", ");
-    }
-    if (str->data[str->len - 1] == ' ') {
-        str->len -= 2;
+        append(&str, "\n");
     }
     append(&str, "]");
     if (buff != NULL) {

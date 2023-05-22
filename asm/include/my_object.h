@@ -35,7 +35,7 @@ enum OBJECT {
  *
  * @return a new object
 */
-void * create(int type, ...);
+void * create(float type, ...);
 
 /**
  * @brief append some data to an object. the data depends on the object.

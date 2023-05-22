@@ -22,4 +22,8 @@
 */
 int big_endian(int nbr);
 
+list_str_t * parse_asm(const char * filename);
+
+// list_str_t * special_split(str_t * str, const char * sep);
+
 #endif /* MY_ASM */
