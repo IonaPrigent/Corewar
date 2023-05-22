@@ -13,17 +13,23 @@
 
     #include "my_lib.h"
     #include "op.h"
+    #include "error.h"
 
     #define SUCCESS 0
     #define ERROR 84
+
+typedef struct champ_s {
+    header_t * hdr;
+    vec_t * cmd;
+} champ_t;
 
 /**
  * @brief convert a little endian int to big endian (reverse bytes).
 */
 int big_endian(int nbr);
 
-list_str_t * parse_asm(const char * filename);
+champ_t * parse_asm(const char * filename);
 
-// list_str_t * special_split(str_t * str, const char * sep);
+void write_header(FILE * file, header_t * header);
 
 #endif /* MY_ASM */

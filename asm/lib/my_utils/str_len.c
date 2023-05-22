@@ -7,7 +7,7 @@
 
 #include "my_utils.h"
 
-size_t str_len(char * str)
+size_t str_len(const char * str)
 {
     size_t len = 0;
 

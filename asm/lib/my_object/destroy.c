@@ -19,18 +19,20 @@ static const void * DESTROY_OBJ[] = {
     &dict_destroy,
 };
 
-void destroy(void * obj)
+void * destroy(void * obj)
 {
     int type = 0;
     void (* destroy_obj)(void *) = NULL;
 
     if (obj == NULL) {
-        return;
+        return NULL;
     }
 
     type = get_obj_type(obj);
     destroy_obj = DESTROY_OBJ[type];
     destroy_obj(obj);
+
+    return NULL;
 }
 
 void auto_free(void * ptr)

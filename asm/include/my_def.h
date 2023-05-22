@@ -18,7 +18,7 @@
     #define LIST(len)       create(LIST, len)
     #define DICT(len)       create(DICT, len)
 
-    #define NSTR(str, len)  create(STR + 0.1, str, len)
+    #define STRN(str, len)  create(STR + 0.1, str, len)
 
     #define ABS(x)  (((x) < 0) ? -(x) : (x))
 

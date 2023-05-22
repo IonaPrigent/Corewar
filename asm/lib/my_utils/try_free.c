@@ -9,9 +9,11 @@
 
 void free(void * __ptr);
 
-void try_free(void * ptr)
+void * try_free(void * ptr)
 {
     if (ptr != NULL) {
         free(ptr);
     }
+
+    return NULL;
 }

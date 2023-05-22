@@ -41,7 +41,13 @@
 
 int main(UNUSED int ac, char ** av)
 {
-    parse_asm((av[1]) ? av[1] : "abel.s");
+    FILE * file = fopen("abel.cor", "w");
+    champ_t * champ = parse_asm((av[1]) ? av[1] : "abel.s");
+
+    if (champ == NULL)
+        return ERROR;
+    write_header(file, champ->hdr);
+
 
     return 0;
 }

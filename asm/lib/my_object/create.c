@@ -13,7 +13,6 @@ void * vec_create(va_list ap);
 list_t * list_create(va_list ap);
 dict_t * dict_create(va_list ap);
 
-// this should be a double array for NSTR
 static const void * CREATE[4][2] = {
     {&str_create, &str_ncreate},
     {&vec_create},

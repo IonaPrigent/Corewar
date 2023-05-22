@@ -10,7 +10,7 @@
 #include "my_object.h"
 #include "my_utils.h"
 
-void vfree(size_t n, ...)
+void * vfree(size_t n, ...)
 {
     va_list ap;
 
@@ -19,9 +19,11 @@ void vfree(size_t n, ...)
         try_free(va_arg(ap, void *));
     }
     va_end(ap);
+
+    return NULL;
 }
 
-void obj_vfree(size_t n, ...)
+void * obj_vfree(size_t n, ...)
 {
     va_list ap;
 
@@ -30,4 +32,6 @@ void obj_vfree(size_t n, ...)
         destroy(va_arg(ap, void *));
     }
     va_end(ap);
+
+    return NULL;
 }

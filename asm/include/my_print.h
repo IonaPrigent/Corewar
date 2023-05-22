@@ -20,4 +20,8 @@ typedef struct formater_s {
 
 size_t print(const char * str, ...);
 
+void write_fd(int fd, const char * str);
+void write_error(const char * str);
+void write_line_error(const char * str, int line);
+
 #endif /* MY_PRINT */

@@ -98,7 +98,7 @@ void * delete(void * obj, ...);
  *
  * @param obj oject
 */
-void destroy(void * obj);
+void * destroy(void * obj);
 
 /**
  * @brief linked to the macro AUTOFREE.
