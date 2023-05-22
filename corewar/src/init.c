@@ -17,15 +17,12 @@
 #include "corewar_proto.h"
 #include "my.h"
 
-static char **parse_cor_file(char *filename, char **process_info)
+static char **parse_cor_file(char *filename)
 {
-    char c;
+    header_t *programm = malloc(sizeof(header_t));
     int fd = open(filename, O_RDONLY);
 
-    if (fd == -1)
-        return NULL;
-
-    while (read(fd, &c, 1) != 1)
+    return NULL;
 }
 
 static int get_nb_processes(int ac, char **av)
@@ -45,6 +42,7 @@ int a)
     all_champ->wait = 0;
     all_champ->name = 0;
     all_champ->PC = 0;
+    all_champ->carry = 0;
 
     for (int i = 0; all_champ->registers[i]; i++) {
         if (i = 0)
