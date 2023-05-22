@@ -12,7 +12,7 @@ int write_header(const char * filename, header_t * header)
     AUTOFREE str_t * str = STR(filename);
     FILE * file = NULL;
 
-    for (size_t i = str->len - 1; str_chr(str->data, '.'); i++) {
+    while (str_chr(str->data, '.')) {
         delete(str, str->len);
     }
     append(&str, ".cor");
