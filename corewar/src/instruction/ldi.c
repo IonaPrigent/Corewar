@@ -22,6 +22,13 @@ int load_index(octet_t memory[MEM_SIZE], process_t *process)
         return ERROR;
     value = get_value_from_param_ind
     (memory, FSRT_PARAM(parameters), process->registers, &i);
+    value = ((process->PC + value) % IDX_MOD) % MEM_SIZE;
     value = GET_MEM_IND(memory, &value);
+    value += get_value_from_param_ind
+    (memory, SECO_PARAM(parameters), process->registers, &i);
+    value = ((process->PC + value) % IDX_MOD) % MEM_SIZE;
+    value = GET_MEM_DIR(memory, &value);
+    set_register(process, GET_OCTET(memory, process->PC, i), value, true);
+    reset_process(process, i + 1);
     return SUCESS;
 }
