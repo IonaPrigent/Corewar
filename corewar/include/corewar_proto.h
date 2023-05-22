@@ -5,7 +5,9 @@
 ** corewar_proto
 */
 
-#include "core_type.h"
+#include "corewar_type.h"
+#include "corewar_macros.h"
+#include <stdbool.h>
 
 #ifndef COREWAR_PROTO_H_
     #define COREWAR_PROTO_H_
@@ -16,8 +18,10 @@ int vm_core(int ac, char const *av[]);
 /*
 *   get value placed in the main memory
 */
-int get_value_from_dir(octet_t const *memory, int *i);
-int get_value_from_ind(octet_t const *memory, int *i);
+int get_value_from_mem(octet_t const *memory, int *i, int size);
+
+    #define GET_MEM_IND(mem, index) (get_value_from_mem(mem, index, IND_SIZE))
+    #define GET_MEM_DIR(mem, index) (get_value_from_mem(mem, index, DIR_SIZE))
 
 /*
 *   get parameter
@@ -28,7 +32,7 @@ int reg[], int *i);
 int get_value_from_param_ind(octet_t const *memory, octet_t param,
 int reg[], int *i);
 
-
+void set_register(process_t *process, int reg_id, int value, bool mod_carry);
 void place_memory(char memory[MEM_SIZE], int value, int idx);
 void display_memory(octet_t memory[]);
 int init_all(process_t **all_champ, octet_t arena[MEM_SIZE],

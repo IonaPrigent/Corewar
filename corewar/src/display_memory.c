@@ -6,7 +6,8 @@
 */
 
 #include <unistd.h>
-#include "core_type.h"
+#include "corewar_macros.h"
+#include "corewar_type.h"
 #include "macros.h"
 #include "my.h"
 

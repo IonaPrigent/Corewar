@@ -6,7 +6,8 @@
 */
 
 #include "corewar_proto.h"
-#include "core_type.h"
+#include "corewar_macros.h"
+#include "corewar_type.h"
 #include "macros.h"
 
 void place_memory(char memory[MEM_SIZE], int value, int idx)

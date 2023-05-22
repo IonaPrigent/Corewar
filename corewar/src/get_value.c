@@ -5,26 +5,17 @@
 ** get_value
 */
 
-#include "core_type.h"
+#include "corewar_type.h"
 #include "macros.h"
+#include "corewar_proto.h" 
+#include "corewar_macros.h"
 #include "op.h"
 
-int get_value_from_ind(octet_t const *memory, int *i)
+int get_value_from_mem(octet_t const *memory, int *i, int size)
 {
     int value = 0;
 
-    for (; *i < IND_SIZE; *i += 1) {
-        value <<= 8;
-        value += memory[*i % MEM_SIZE];
-    }
-    return value;
-}
-
-int get_value_from_dir(octet_t const *memory, int *i)
-{
-    int value = 0;
-
-    for (; *i < DIR_SIZE; *i += 1) {
+    for (; *i < size; *i += 1) {
         value <<= 8;
         value += memory[*i % MEM_SIZE];
     }
@@ -33,7 +24,6 @@ int get_value_from_dir(octet_t const *memory, int *i)
 
 void reset_process(process_t *process, int i)
 {
-    ++i;
     process->PC = REPLACE_PC(process->PC, i);
     process->wait = 0;
 }
@@ -46,9 +36,9 @@ int reg[], int *i)
         *i += 1;
         return (!IS_REG(memory[*i - 1])) ? reg[memory[*i] - 1] : ERROR;
     case PARAM_IND:
-        return get_value_from_ind(memory, i);
+        return GET_MEM_IND(memory, i);
     case PARAM_DIR:
-        return get_value_from_dir(memory, i);
+        return GET_MEM_DIR(memory, i);
     default:
         break;
     }
@@ -64,7 +54,7 @@ int reg[], int *i)
         return (!IS_REG(memory[*i - 1])) ? reg[memory[*i] - 1] : ERROR;
     case PARAM_DIR:
     case PARAM_IND:
-        return get_value_from_ind(memory, i);
+        return GET_MEM_IND(memory, i);
     default:
         break;
     }

@@ -1,35 +1,19 @@
 /*
 ** EPITECH PROJECT, 2023
-** Corewar
+** corewar
 ** File description:
-** core_type
+** corewar_macros
 */
 
-#include "op.h"
-
-#ifndef CORE_TYPE_H_
-    #define CORE_TYPE_H_
-
-typedef char octet_t;
-
-typedef octet_t reg_t;
-typedef short indirect_t;
-typedef int direct_t;
-typedef indirect_t indexe_t;
-
-typedef struct process {
-    char *name;
-    int PC;
-    int wait;
-    int time_left;
-    int registers[REG_NUMBER];
-} process_t;
+#ifndef COREWAR_MACROS_H_
+    #define COREWAR_MACROS_H_
 
     #define PARAM_REG 0b01
     #define PARAM_DIR 0b10
     #define PARAM_IND 0b11
 
     #define PARAM_MASK 0b11
+
     #define GET_OCTET(mem, PC, i) (mem[(PC + i) % MEM_SIZE])
     #define PARAMETERS(mem, PC) (GET_OCTET(mem, PC, 1))
     #define FSRT_PARAM(param) ((param >> 6) & PARAM_MASK)
@@ -63,4 +47,4 @@ enum INSTRUCTIONS_NAME {
     AFF
 };
 
-#endif /* !CORE_TYPE_H_ */
+#endif /* !COREWAR_MACROS_H_ */
