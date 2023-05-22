@@ -58,4 +58,5 @@ int reg[], int *i)
     default:
         break;
     }
+    return 0;
 }
