@@ -7,7 +7,7 @@
 
 #include "asm.h"
 
-static list_str_t * read_content(const char * filename)
+list_str_t * read_content(const char * filename)
 {
     FILE * file = fopen(filename, "r");
     str_t * text = STR("");
@@ -60,30 +60,31 @@ static header_t * make_header(const str_t * name, const str_t * comment)
     mem_set(header->comment, 0, sizeof(header->comment));
     mem_cpy(header->comment, comment->data + 1, comment->len - 2);
 
-    header->magic = COREWAR_EXEC_MAGIC;
+    header->magic = big_endian(COREWAR_EXEC_MAGIC);
     header->prog_size = big_endian(22);
 
     return header;
 }
 
-static header_t * get_header(list_str_t * list, size_t * i)
+static header_t * get_header(list_str_t * list, size_t * index)
 {
     AUTOFREE list_str_t * name = NULL;
     AUTOFREE list_str_t * comment = NULL;
+    size_t i = 0;
 
-    for (; (*i) < list->len && list->data[(*i)]->len == 0; (*i)++);
-    if ((*i) == list->len)
+    for (; i < list->len && list->data[i]->len == 0; i++);
+    if (i == list->len)
         return NULL;
-    name = split(list->data[(*i)], " \t\n", TRUE, TRUE);
+    name = split(list->data[i], " \t\n", TRUE, TRUE);
     if (valid_info(name, NAME_CMD_STR, PROG_NAME_LENGTH) == 1)
         return destroy(name);
-    for (; (*i) < list->len && list->data[(*i)]->len == 0; (*i)++);
-    if ((*i) == list->len)
+    for (i++; i < list->len && list->data[i]->len == 0; i++);
+    if (i == list->len)
         return NULL;
-    comment = split(list->data[(*i)], " \t\n", TRUE, TRUE);
+    comment = split(list->data[i], " \t\n", TRUE, TRUE);
     if (valid_info(comment, COMMENT_CMD_STR, COMMENT_LENGTH) == 1)
         return NULL;
-
+    *index = i;
     return make_header(name->data[1], comment->data[1]);
 }
 
@@ -98,16 +99,8 @@ champ_t * parse_asm(const char * filename)
     if (text == NULL)
         return NULL;
     header = get_header(text, &index);
-    if (header == NULL) {
+    if (header == NULL)
         return NULL;
-    } else {
-        
-    }
-    // // command = get_command(text, index);
-    // if (command == NULL) {
-    //     free(header);
-    //     return NULL;
-    // }
     champ = malloc(sizeof(champ_t));
     champ->hdr = header;
     champ->cmd = command;

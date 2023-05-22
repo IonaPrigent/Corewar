@@ -28,8 +28,10 @@ typedef struct champ_s {
 */
 int big_endian(int nbr);
 
+list_str_t * read_content(const char * filename);
+
 champ_t * parse_asm(const char * filename);
 
-void write_header(FILE * file, header_t * header);
+int write_header(const char * filename, header_t * header);
 
 #endif /* MY_ASM */

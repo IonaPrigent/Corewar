@@ -15,7 +15,9 @@ list_str_t * split(str_t * str, const char * sep, int clean, int keepquote)
     int inquote = FALSE;
 
     for (size_t i = 0; i <= str->len; i++) {
-        inquote = (str->data[i] == '"' && keepquote) ? TRUE : FALSE;
+        if (str->data[i] == '"' && keepquote) {
+            inquote = 1 - inquote;
+        }
         if (i == str->len || (str_chr(sep, str->data[i]) && inquote == FALSE)) {
             append(&list, STRN(str->data + last_idx, i - last_idx));
             last_idx = i + 1;
