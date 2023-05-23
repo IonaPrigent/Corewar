@@ -23,6 +23,7 @@ typedef struct process {
     int wait;
     int time_left;
     direct_t registers[REG_NUMBER];
+    int fd;
     int carry;
 } process_t;
 
@@ -36,6 +37,7 @@ typedef struct corewar {
     int nb_processes;
     int nb_original_prog;
     char mem[MEM_SIZE];
+    char **filenames;
     struct name_id *all_name;
 } corewar_t;
 
