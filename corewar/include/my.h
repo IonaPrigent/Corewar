@@ -14,5 +14,6 @@ void my_putoct(unsigned int nb);
 int my_getnbr(char const *str);
 int my_putstr(char const *str);
 int my_strlen(char const *str);
+char *my_strcpy(char *dest, char const *src);
 
 #endif /* !MY_H_ */

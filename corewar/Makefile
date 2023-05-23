@@ -47,6 +47,7 @@ SRC_LIB		=	$(addprefix lib/my/,	\
 				my_getnbr.c				\
 				my_putstr.c				\
 				my_strlen.c				\
+				my_strcpy.c				\
 				)
 
 SRC	=	$(addprefix src/,	\

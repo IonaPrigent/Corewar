@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include "op.h"
 #include "macros.h"
+#include "corewar_type.h"
 
 int check_magic_number(int fd, header_t *program)
 {
@@ -29,7 +30,7 @@ int check_magic_number(int fd, header_t *program)
     return ERROR;
 }
 
-int get_prog_name(int fd, header_t *program)
+int get_prog_name(int fd, process_t *process)
 {
     char c;
     char p_name[PROG_NAME_LENGTH + 1];
@@ -37,12 +38,12 @@ int get_prog_name(int fd, header_t *program)
     for (int i = 0; read(fd, &c, 1) != 1 && i <= PROG_NAME_LENGTH; i++)
         p_name[i] = c;
     for (int i = 0; i < PROG_NAME_LENGTH + 1; ++i) {
-        program->prog_name[i] = p_name[i];
+        process->name[i] = p_name[i];
     }
     return 0;
 }
 
-int get_prog_size(int fd, header_t *program)
+int get_prog_size(int fd, process_t *process)
 {
     char c;
     char size_octet[4];
@@ -50,19 +51,17 @@ int get_prog_size(int fd, header_t *program)
     for (int i = 0; read(fd, &c, 1) != 1 && i < 4; ++i)
         size_octet[i] = c;
     for (int i = 0; i < 4; ++i) {
-        program->prog_size <<= 8;
-        program->prog_size += size_octet[i];
+        process->size <<= 8;
+        process->size += size_octet[i];
     }
-    if (program->prog_size == COREWAR_EXEC_MAGIC)
-        return SUCESS;
-    return ERROR;
+    return SUCESS;
 }
 
-int get_program(int fd, header_t *program, char mem[MEM_SIZE], int pc)
+int get_program(int fd, process_t *process, char mem[MEM_SIZE], int pc)
 {
     char c;
 
-    for (int i = 0; read(fd, &c, 1) != 1 && i < program->prog_size; ++i)
+    for (int i = 0; read(fd, &c, 1) != 1 && i < process->size; ++i)
         mem[(pc + i) % MEM_SIZE] = c;
 
     return 0;

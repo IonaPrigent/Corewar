@@ -22,6 +22,7 @@ typedef struct process {
     int PC;
     int wait;
     int time_left;
+    int size;
     direct_t registers[REG_NUMBER];
     int fd;
     int carry;

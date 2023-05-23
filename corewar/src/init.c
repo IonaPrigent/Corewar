@@ -17,18 +17,33 @@
 #include "corewar_proto.h"
 #include "my.h"
 
-static char **parse_cor_file(char *filename)
+static void init_empty_process(process_t *process)
+{
+    process->carry = 0;
+    process->name = NULL;
+    process->PC = 0;
+    process->size = 0;
+    process->time_left = 0;
+    process->wait = 0;
+}
+
+static int init_single_process(process_t *process, char [MEM_SIZE], int pc)
 {
     header_t *program = malloc(sizeof(header_t));
-    int fd = open(filename, O_RDONLY);
 
-    if (fd == -1 || check_magic_number(fd, program))
-        return NULL;
-    get_prog_name(fd, program);
-    get_prog_size(fd, program);
-    get_program(fd, program);
+    init_empty_process(process);
+    if (check_magic_number(process->fd, program))
+        return 1;
+    get_prog_name(process->fd, process);
+    get_prog_size(process->fd, process);
+    get_program(process->fd, process);
+    process->PC = pc;
+    process->time_left = CYCLE_TO_DIE;
 
-    return NULL;
+    for (int i = 0; i < REG_NUMBER; i++) {
+        process->registers[i] = 0;
+    }
+    return SUCESS;
 }
 
 static int get_nb_processes(char const *av[])
@@ -42,27 +57,19 @@ static int get_nb_processes(char const *av[])
     return nb_processes;
 }
 
-static int init_single_process(process_t *process, char [MEM_SIZE], int pc)
+char **get_filenames(corewar_t *core, const char *av[])
 {
-    process->wait = 0;
-    process->name = 0;
-    process->PC = pc;
-    process->carry = 0;
-
-    for (int i = 0; i < REG_NUMBER; i++) {
-        process->registers[i] = 0;
-    }
-    return SUCESS;
-}
-
-char **get_filenames(corewar_t *core, char **av)
-{
-    char **filenames =  malloc(sizeof(char *) * core->nb_processes);
+    int a = 0;
+    char **filenames = malloc(sizeof(char *) * core->nb_processes + 1);
 
     for (int i = 0; av[i]; i++) {
-        if (my_strcmp(av[i] + (my_strlen(av[i]) - 4), ".cor") == 0)
-            filenames[i] = av[i];
+        if (my_strcmp(av[i] + (my_strlen(av[i]) - 4), ".cor") == 0) {
+            my_strcpy(filenames[a], av[i]);
+            core->processes[i].fd = open(filenames[a], O_RDONLY);
+            a++;
+        }
     }
+    filenames[a] = NULL;
     return filenames;
 }
 
@@ -74,7 +81,7 @@ int init_all(corewar_t *core, char const *av[])
     core->filenames = get_filenames(core, av);
     int space = MEM_SIZE / core->nb_processes;
 
-    if (core->processes == NULL) {
+    if (core->processes == NULL || core->filenames == NULL) {
         return ERROR;
     }
     for (int i = 0; i < MEM_SIZE; ++i) {

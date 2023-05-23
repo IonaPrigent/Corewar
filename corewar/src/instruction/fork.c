@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 
-int fork_(octet_t mem[MEM_SIZE], process_t *process)
+int fork_fct(octet_t mem[MEM_SIZE], process_t *process)
 {
     corewar_t *core = corewar_store();
     int i = process->PC + 1;
