@@ -42,37 +42,36 @@ static int get_nb_processes(int ac, char const *av[])
     return nb_processes;
 }
 
-static int init_single_process(process_t *all_champ, octet_t memory[MEM_SIZE],
-int a, int pc)
+static int init_single_process(corewar_t *core, int i, int id, int pc)
 {
-    all_champ->wait = 0;
-    all_champ->name = 0;
-    all_champ->PC = pc;
-    all_champ->carry = 0;
+    core->processes[i].wait = 0;
+    core->processes[i].name = 0;
+    core->processes[i].PC = pc;
+    core->processes[i].carry = 0;
 
-    for (int i = 0; all_champ->registers[i]; i++) {
+    for (int i = 0; i < REG_NUMBER; i++) {
         if (i = 0)
-            all_champ->registers[i] = a;
-        all_champ->registers[i] = 0;
+            core->processes[i].registers[i] = id;
+        core->processes[i].registers[i] = 0;
     }
     return SUCESS;
 }
 
-int init_all(process_t **all_champ, octet_t memory[MEM_SIZE],
-int ac, char const *av[])
+int init_all(corewar_t *core,int ac, char const *av[])
 {
-    int nb_process = get_nb_processes(ac, av);
-    *all_champ = malloc(sizeof(process_t) * nb_process);
-    int void_between = MEM_SIZE / nb_process;
+    core->nb_processes = get_nb_processes(ac, av);
+    core->processes = malloc(sizeof(process_t) * core->nb_processes);
+    core->all_name = malloc(sizeof(struct name_id) * core->nb_processes);
+    int space = MEM_SIZE / core->nb_processes;
 
-    if (*all_champ == NULL) {
+    if (core->processes == NULL || core->all_name == NULL) {
         return ERROR;
     }
     for (int i = 0; i < MEM_SIZE; ++i) {
-        memory[i] = 0;
+        core->mem[i] = 0;
     }
-    for (int i = 0; i < nb_process; i++)
-        init_single_process(all_champ[i], memory, i, i * void_between);
-
+    for (int i = 0; i < core->nb_processes; i++) {
+        init_single_process(&(core->processes[i]), core->mem, i, i * space);
+    }
     return SUCESS;
 }

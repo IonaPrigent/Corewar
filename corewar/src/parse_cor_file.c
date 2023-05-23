@@ -52,13 +52,12 @@ int get_prog_size(int fd, header_t *program)
     return 0;
 }
 
-int get_program(int fd, header_t *program, char mem[MEM_SIZE])
+int get_program(int fd, header_t *program, char mem[MEM_SIZE], int pc)
 {
     char c;
-    char p_core[program->prog_size];
 
     for (int i = 0; read(fd, &c, 1) != 1 && i < program->prog_size; ++i)
-        p_core[i] = c;
+        mem[(pc + i) % MEM_SIZE] = c;
 
     return 0;
 }

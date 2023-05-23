@@ -49,16 +49,16 @@ void read_name(int const fd, process_t *process)
 
 int vm_core(int ac, char const *av[])
 {
-    corewar_t core;
-    core.nb_processes = 0;
-    core.processes = 0;
-    
+    corewar_t *core = corewar_store();
+    core->nb_processes = 0;
+    core->processes = 0;
+
     if (ac == 2 && my_strcmp(av[1], "-h") == 0)
         return helper();
     else if (ac < 3)
         return EXIT_ERROR;
-    if (init_all(&(core.processes), core.mem, ac, av) == ERROR)
+    if (init_all(core, ac, av) == ERROR)
         return EXIT_ERROR;
-    display_memory(core.mem);
+    display_memory(core->mem);
     return SUCESS;
 }

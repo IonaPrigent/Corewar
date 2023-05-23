@@ -46,12 +46,13 @@ void display_memory(octet_t memory[]);
 /*
 *   initialisation
 */
-int init_all(process_t **all_champ, octet_t arena[MEM_SIZE],
-int ac, char const *av[]);
+int init_all(corewar_t *core, int ac, char const *av[]);
 int get_prog_name(int fd, header_t *program);
 int check_magic_number(int fd, header_t *program);
 int get_prog_size(int fd, header_t *program);
 int get_program(int fd, header_t *program);
+
+corewar_t *corewar_store(void);
 
 void reset_process(process_t *process, int i);
 

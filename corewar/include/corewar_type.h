@@ -26,10 +26,17 @@ typedef struct process {
     int carry;
 } process_t;
 
+struct name_id {
+    char *name;
+    int id;
+};
+
 typedef struct corewar {
     process_t *processes;
     int nb_processes;
+    int nb_original_prog;
     char mem[MEM_SIZE];
+    struct name_id *all_name;
 } corewar_t;
 
 #endif /* !corewar_type_H_ */
