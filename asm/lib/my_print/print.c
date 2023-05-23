@@ -54,16 +54,30 @@ static void parse_format(const char * format, str_t ** str, va_list ap)
     }
 }
 
-size_t print(const char * format, ...)
+static size_t my_printf(int fd, const char * format, va_list ap)
 {
     AUTOFREE str_t * str = create(STR, "");
-    va_list ap;
 
-    va_start(ap, format);
     parse_format(format, &str, ap);
     va_end(ap);
 
-    write(STDOUT_FILENO, str->data, str->len);
+    write(fd, str->data, str->len);
 
     return str->len;
+}
+
+size_t dprint(int fd, const char * format, ...)
+{
+    va_list ap;
+
+    va_start(ap, format);
+    return my_printf(fd, format, ap);
+}
+
+size_t print(const char * format, ...)
+{
+    va_list ap;
+
+    va_start(ap, format);
+    return my_printf(STDOUT_FILENO, format, ap);
 }

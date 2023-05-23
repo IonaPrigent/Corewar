@@ -21,6 +21,7 @@ void write_error(const char * str)
 {
     write_fd(2, "\033[1;31mERROR\033[1;0m: ");
     write_fd(2, str);
+    write_fd(2, "\n");
 }
 
 void write_line_error(const char * str, int line)

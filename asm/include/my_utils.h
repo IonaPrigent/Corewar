@@ -37,4 +37,6 @@ void * try_free(void * ptr);
 list_str_t * split(str_t * str, const char * sep, int clean, int keepquote);
 list_str_t * filter(list_str_t * list);
 
+size_t str_count_char(const char * str, char c);
+
 #endif /* MY_UTILS */

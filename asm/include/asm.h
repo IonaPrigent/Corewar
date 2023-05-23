@@ -31,6 +31,7 @@ int big_endian(int nbr);
 list_str_t * read_content(const char * filename);
 
 champ_t * parse_asm(const char * filename);
+header_t * parse_header(list_str_t * text);
 
 int write_header(const char * filename, header_t * header);
 
