@@ -11,7 +11,7 @@
 #include "corewar_proto.h"
 #include "macros.h"
 
-int and(octet_t memory[MEM_SIZE], process_t *process)
+int and_fct(octet_t memory[MEM_SIZE], process_t *process)
 {
     int i = 2;
     octet_t parameters = PARAMETERS(memory, process->PC);

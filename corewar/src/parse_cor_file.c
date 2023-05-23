@@ -45,11 +45,17 @@ int get_prog_name(int fd, header_t *program)
 int get_prog_size(int fd, header_t *program)
 {
     char c;
-    char p_size[4];
+    char size_octet[4];
 
-    for (int i = 0; read(fd, &c, 1) != 1 && i < 4; i++)
-        p_size[i] = c;
-    return 0;
+    for (int i = 0; read(fd, &c, 1) != 1 && i < 4; ++i)
+        size_octet[i] = c;
+    for (int i = 0; i < 4; ++i) {
+        program->prog_size <<= 8;
+        program->prog_size += size_octet[i];
+    }
+    if (program->prog_size == COREWAR_EXEC_MAGIC)
+        return SUCESS;
+    return ERROR;
 }
 
 int get_program(int fd, header_t *program, char mem[MEM_SIZE], int pc)

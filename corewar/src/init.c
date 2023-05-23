@@ -31,7 +31,7 @@ static char **parse_cor_file(char *filename)
     return NULL;
 }
 
-static int get_nb_processes(int ac, char const *av[])
+static int get_nb_processes(char const *av[])
 {
     int nb_processes = 0;
 
@@ -50,16 +50,16 @@ static int init_single_process(corewar_t *core, int i, int id, int pc)
     core->processes[i].carry = 0;
 
     for (int i = 0; i < REG_NUMBER; i++) {
-        if (i = 0)
+        if (i == 0)
             core->processes[i].registers[i] = id;
         core->processes[i].registers[i] = 0;
     }
     return SUCESS;
 }
 
-int init_all(corewar_t *core,int ac, char const *av[])
+int init_all(corewar_t *core, char const *av[])
 {
-    core->nb_processes = get_nb_processes(ac, av);
+    core->nb_processes = get_nb_processes(av);
     core->processes = malloc(sizeof(process_t) * core->nb_processes);
     core->all_name = malloc(sizeof(struct name_id) * core->nb_processes);
     int space = MEM_SIZE / core->nb_processes;
@@ -71,7 +71,7 @@ int init_all(corewar_t *core,int ac, char const *av[])
         core->mem[i] = 0;
     }
     for (int i = 0; i < core->nb_processes; i++) {
-        init_single_process(&(core->processes[i]), core->mem, i, i * space);
+        init_single_process(core, i, i + 1, i * space);
     }
     return SUCESS;
 }

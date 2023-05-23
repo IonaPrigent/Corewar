@@ -57,7 +57,7 @@ int vm_core(int ac, char const *av[])
         return helper();
     else if (ac < 3)
         return EXIT_ERROR;
-    if (init_all(core, ac, av) == ERROR)
+    if (init_all(core, av) == ERROR)
         return EXIT_ERROR;
     display_memory(core->mem);
     return SUCESS;

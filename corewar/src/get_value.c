@@ -7,12 +7,11 @@
 
 #include "corewar_type.h"
 #include "macros.h"
-#include "corewar_proto.h" 
+#include "corewar_proto.h"
 #include "corewar_macros.h"
 #include "op.h"
 
 /* CHANGE TYPE */
-
 int get_value_from_mem(octet_t const *memory, int *i, int size)
 {
     int value = 0;
@@ -30,8 +29,6 @@ void reset_process(process_t *process, int i)
     process->wait = 0;
 }
 
-/* CHANGE TYPE */
-
 int get_value_from_param(octet_t const *memory, octet_t param,
 int reg[], int *i)
 {
@@ -48,8 +45,6 @@ int reg[], int *i)
     }
     return 0;
 }
-
-/* CHANGE TYPE */
 
 int get_value_from_param_ind(octet_t const *memory, octet_t param,
 int reg[], int *i)

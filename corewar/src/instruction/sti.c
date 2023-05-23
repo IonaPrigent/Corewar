@@ -26,12 +26,10 @@ int store_index(octet_t memory[MEM_SIZE], process_t *process)
     int value = 0;
     int i = 2;
 
-    if (process->wait < 25) {
+    if (process->wait < 25)
         return SUCESS;
-    }
-    if (FSRT_PARAM(parameters) != PARAM_REG) {
+    if (FSRT_PARAM(parameters) != PARAM_REG)
         return ERROR;
-    }
     value = process->registers[memory[process->PC + i] - 1];
     i += REG_LEN;
     index += get_value_from_param_ind(memory, SECO_PARAM(parameters),
