@@ -34,6 +34,7 @@ typedef struct corewar {
     int nb_original_prog;
     char mem[MEM_SIZE];
     char **filenames;
+    char **adresses;
 } corewar_t;
 
 #endif /* !corewar_type_H_ */

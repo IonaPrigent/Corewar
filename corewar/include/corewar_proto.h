@@ -51,7 +51,7 @@ int init_all(corewar_t *core, char const *av[]);
 int get_prog_name(int fd, process_t *process);
 int check_magic_number(int fd, header_t *program);
 int get_prog_size(int fd, process_t *process);
-int get_program(int fd, process_t *process);
+int get_program(int fd, process_t *process, char mem[MEM_SIZE], int pc);
 
 corewar_t *corewar_store(void);
 

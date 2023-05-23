@@ -27,7 +27,7 @@ static void init_empty_process(process_t *process)
     process->wait = 0;
 }
 
-static int init_single_process(process_t *process, char [MEM_SIZE], int pc)
+static int init_single_process(process_t *process, char mem[MEM_SIZE], int pc)
 {
     header_t *program = malloc(sizeof(header_t));
 
@@ -36,7 +36,7 @@ static int init_single_process(process_t *process, char [MEM_SIZE], int pc)
         return 1;
     get_prog_name(process->fd, process);
     get_prog_size(process->fd, process);
-    get_program(process->fd, process);
+    get_program(process->fd, process, mem, pc);
     process->PC = pc;
     process->time_left = CYCLE_TO_DIE;
 

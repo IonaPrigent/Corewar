@@ -6,6 +6,8 @@
 */
 
 #include <stddef.h>
+#include <stdlib.h>
+#include "corewar_type.h"
 #include "macros.h"
 #include "my.h"
 
@@ -20,15 +22,16 @@ int is_dash_dump_on(char const *av[])
     return -1;
 }
 
-char *is_dash_adress_on(char const *av[])
+void is_dash_adress_on(corewar_t *core, char const *av[])
 {
-    char *adress = NULL;
+    int a = 0;
+    core->adresses = malloc(sizeof(char *) * core->nb_processes);
 
     for (int i = 0; av[i]; i++) {
-        if (my_strcmp(av[i], "-a") == 0) {
-            my_strcpy(adress, av[i + 1]);
-            return adress;
+        if (my_strcmp(av[i], "-a") == 0 || (a &&
+        my_strcmp(av[i + 1] + (my_strlen(av[i + 1]) - 4), ".cor") == 0)) {
+            my_strcpy(core->adresses[a], av[i + 1]);
+            a++;
         }
     }
-    return NULL;
 }
