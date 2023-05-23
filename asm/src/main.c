@@ -5,39 +5,17 @@
 ** main
 */
 
-#include "op.h"
 #include "asm.h"
-#include <unistd.h>
 
-static void testing(header_t *header)
+int main(UNUSED int ac, const char * const * av)
 {
-    char name[PROG_NAME_LENGTH] = "hey";
-    char comment[COMMENT_LENGTH] = "hello";
-    header->magic = 0xea83f3;
-    header->prog_size = 22;
+    champ_t * champ = NULL;
 
-    for (int i = 0; i < PROG_NAME_LENGTH; i++)
-        header->prog_name[i] = 0x0;
-    for (int i = 0; i < COMMENT_LENGTH; i++)
-        header->comment[i] = 0x0;
-
-    for (int i = 0; name[i] != '\0'; i++)
-        header->prog_name[i] = name[i];
-    for (int i = 0; comment[i] != '\0'; i++)
-        header->comment[i] = comment[i];
-}
-
-int main(int ac, char **av)
-{
-    char *buffer = NULL;
-    header_t header;
-
-    testing(&header);
-    if (ac == 1) {
-        buffer = open_file(av[1]);
-    }
-    if (ac > 2 || ac < 2)
+    if (ac != 2)
         return ERROR;
-    write(1, &header, sizeof(header_t));
-    return 0;
+    champ = parse_asm(av[1]);
+    if (champ == NULL)
+        return ERROR;
+
+    return write_header(av[1], champ->hdr);
 }

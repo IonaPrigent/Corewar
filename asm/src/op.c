@@ -1,11 +1,8 @@
 /*
-** op.c for  korewar
-**
-** Made by Astek
-** Login   <astek@epitech.net>
-**
-** Started on  Mon Mar 30 11:14:31 2009 Astek
-** Last update Tue Mar 22 16:44:20 2011 Astek
+** EPITECH PROJECT, 2023
+** Corewar
+** File description:
+** op.c for corewar
 */
 
 #include "op.h"
@@ -34,4 +31,4 @@ op_t op_tab[] = {
     {"lfork", 1, {T_DIR}, 15, 1000, "long fork"},
     {"aff", 1, {T_REG}, 16, 2, "aff"},
     {0, 0, {0}, 0, 0, 0}
-    };
+};

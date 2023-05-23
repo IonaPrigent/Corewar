@@ -2,16 +2,36 @@
 ** EPITECH PROJECT, 2023
 ** Corewar
 ** File description:
-** asm
+** op
 */
 
-#ifndef ASM_H_
-    #define ASM_H_
-    #define ERROR (84)
-    #define SUCCESS (0)
+#ifndef MY_ASM
+    #define MY_ASM
 
-    #include <stdbool.h>
+    #include <stdlib.h>
+    #include <stdio.h>
 
-char *open_file(char const *file_name);
+    #include "my_lib.h"
+    #include "op.h"
+    #include "error.h"
 
-#endif /* !ASM_H_ */
+    #define SUCCESS 0
+    #define ERROR 84
+
+typedef struct champ_s {
+    header_t * hdr;
+    vec_t * cmd;
+} champ_t;
+
+/**
+ * @brief convert a little endian int to big endian (reverse bytes).
+*/
+int big_endian(int nbr);
+
+list_str_t * read_content(const char * filename);
+
+champ_t * parse_asm(const char * filename);
+
+int write_header(const char * filename, header_t * header);
+
+#endif /* MY_ASM */

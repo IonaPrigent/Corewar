@@ -5,8 +5,8 @@
 ** op
 */
 
-#ifndef _OP_H_
-    #define _OP_H_
+#ifndef OP_H
+    #define OP_H
 
     #define MEM_SIZE          (6 * 1024)
     #define IDX_MOD           (512) /* modulo of the index < */
@@ -19,8 +19,8 @@
 
     #define LABEL_CHARS             "abcdefghijklmnopqrstuvwxyz_0123456789"
 
-    #define NAME_CMD_STRING         ".name"
-    #define COMMENT_CMD_STRING      ".comment"
+    #define NAME_CMD_STR        ".name"
+    #define COMMENT_CMD_STR     ".comment"
 
 /*
 ** regs
@@ -43,10 +43,10 @@ typedef char args_type_t;
 typedef struct op_s {
     char *mnemonique;   /* assembly name for the command */
     char nbr_args;
-    args_type_t type[MAX_ARGS_NUMBER];
-    char code;  /* int between [1-16] */
-    int nbr_cycles; /* command explication */
-    char *comment;
+    args_type_t type[MAX_ARGS_NUMBER]; /* arg type for the cmd (reg, dir, ind)*/
+    char code;  /* int between [1-16] the command index */
+    int nbr_cycles; /* nbr cycles before next move available */
+    char *comment; /* command explication */
 } op_t;
 
 /*
@@ -72,7 +72,7 @@ extern op_t op_tab[];   /* operation definition (aka args + type args) */
 typedef struct header_s {
     int magic;  /* redskin code confirmed */
     char prog_name[PROG_NAME_LENGTH + 1];
-    int prog_size;
+    int prog_size; /* size of the prog, literally ! (in bytes) */
     char comment[COMMENT_LENGTH + 1];
 } header_t;
 
@@ -83,4 +83,16 @@ typedef struct header_s {
     #define CYCLE_DELTA     5
     #define NBR_LIVE        40
 
-#endif
+#endif /* OP_H */
+
+/**
+ * coding byte value:
+ * other:    00 // less than 4 params
+ * register: 01
+ * direct:   10
+ * indirect: 11
+ *
+ * exception:
+ * no coding byte because they only take one param of the same type:
+ * live, zjmp, fork and lfork
+*/
