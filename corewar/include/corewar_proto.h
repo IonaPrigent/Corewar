@@ -13,6 +13,7 @@
     #define COREWAR_PROTO_H_
 
 int is_dash_dump_on(char const *av[]);
+char *is_dash_adress_on(char const *av[]);
 int vm_core(int ac, char const *av[]);
 
 /*

@@ -11,7 +11,6 @@
 #include "corewar_macros.h"
 #include "op.h"
 
-/* CHANGE TYPE */
 int get_value_from_mem(octet_t const *memory, int *i, int size)
 {
     int value = 0;
