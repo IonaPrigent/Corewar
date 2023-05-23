@@ -42,7 +42,7 @@ static int get_nb_processes(char const *av[])
     return nb_processes;
 }
 
-static int init_single_process(process_t *process, char [MEM_SIZE], int i, int pc)
+static int init_single_process(process_t *process, char [MEM_SIZE], int pc)
 {
     process->wait = 0;
     process->name = 0;
@@ -55,7 +55,7 @@ static int init_single_process(process_t *process, char [MEM_SIZE], int i, int p
     return SUCESS;
 }
 
-char **get_filenames(corewar_t *core, char const *av[])
+char **get_filenames(corewar_t *core, char **av)
 {
     char **filenames =  malloc(sizeof(char *) * core->nb_processes);
 
@@ -71,18 +71,17 @@ int init_all(corewar_t *core, char const *av[])
     core->nb_processes = get_nb_processes(av);
     core->nb_original_prog = core->nb_processes;
     core->processes = malloc(sizeof(process_t) * core->nb_processes);
-    core->all_name = malloc(sizeof(struct name_id) * core->nb_processes);
     core->filenames = get_filenames(core, av);
     int space = MEM_SIZE / core->nb_processes;
 
-    if (core->processes == NULL || core->all_name == NULL) {
+    if (core->processes == NULL) {
         return ERROR;
     }
     for (int i = 0; i < MEM_SIZE; ++i) {
         core->mem[i] = 0;
     }
     for (int i = 0; i < core->nb_processes; i++) {
-        init_single_process(&(core->processes[i]), core->mem, i, i * space);
+        init_single_process(&(core->processes[i]), core->mem, i * space);
     }
     return SUCESS;
 }
