@@ -11,9 +11,11 @@
 
 #include <stdlib.h>
 
-int fork(octet_t mem[MEM_SIZE], process_t *process)
+int fork_(octet_t mem[MEM_SIZE], process_t *process)
 {
     corewar_t *core = corewar_store();
+    int i = process->PC + 1;
+    int index = GET_MEM_IND(mem, &i);
 
     core->nb_processes += 1;
     core->processes = realloc(core->processes,
@@ -22,5 +24,8 @@ int fork(octet_t mem[MEM_SIZE], process_t *process)
         return ERROR;
     }
     core->processes[core->nb_processes - 1] = *process;
+    core->processes[core->nb_processes - 1].wait = 0;
+    core->processes[core->nb_processes - 1].PC = process->PC + index % IDX_MOD;
+    core->processes[core->nb_processes - 1].PC %= MEM_SIZE;
     return SUCESS;
 }
