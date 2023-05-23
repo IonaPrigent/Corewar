@@ -32,7 +32,7 @@ list_str_t * read_content(const char * filename);
 
 champ_t * parse_asm(const char * filename);
 header_t * parse_header(list_str_t * text);
-vec_t * parse_cmd(list_str_t * text);
+vec_t * parse_command(list_str_t * text);
 
 // tmp: should be write_champ
 int write_champ(const char * filename, champ_t * champ);

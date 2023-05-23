@@ -71,13 +71,13 @@ champ_t * parse_asm(const char * filename)
     header = parse_header(text);
     if (header == NULL)
         return NULL;
-    // command = parse_command(text);
+    command = parse_command(text);
     // if (command == NULL) {
     //     free(header);
     //     return NULL;
     // }
     champ = malloc(sizeof(champ_t));
-    // header->prog_size = big_endian(command->len);
+    // header->prog_size = big_endian(command->len); // add len of all line
     champ->hdr = header;
     champ->cmd = command;
     return champ;

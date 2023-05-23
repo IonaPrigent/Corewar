@@ -23,6 +23,7 @@ VEC_DEF(char,)
 VEC_DEF(int, _int)
 VEC_DEF(float, _float)
 VEC_DEF(size_t, _size)
+VEC_DEF(long, _long)
 VEC_DEF(double, _double)
 
 #endif /* MY_VEC */

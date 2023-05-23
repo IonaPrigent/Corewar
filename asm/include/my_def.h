@@ -32,4 +32,6 @@
     #define BLUE    "\033[34m"
     #define RESET   "\033[0m"
 
+    #define RED_ERROR   "\033[31mERROR\033[0m: "
+
 #endif /* MY_DEF */
