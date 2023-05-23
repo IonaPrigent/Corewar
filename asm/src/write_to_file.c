@@ -7,7 +7,7 @@
 
 #include "asm.h"
 
-int write_header(const char * filename, header_t * header)
+int write_champ(const char * filename, champ_t * champ)
 {
     AUTOFREE str_t * str = STR(filename);
     FILE * file = NULL;
@@ -16,12 +16,13 @@ int write_header(const char * filename, header_t * header)
         delete(str, str->len);
     }
     append(&str, ".cor");
-
     file = fopen(str->data, "w");
     if (file == NULL)
         return ERROR;
-    fwrite(header, sizeof(header_t), 1, file);
-    fclose(file);
 
+    fwrite(champ->hdr, sizeof(header_t), 1, file);
+    // fwrite(champ->cmd, sizeof(char), champ->cmd->len, file);
+
+    fclose(file);
     return SUCCESS;
 }

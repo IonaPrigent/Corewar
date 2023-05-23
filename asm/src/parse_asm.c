@@ -7,6 +7,36 @@
 
 #include "asm.h"
 
+static int isonlyspace(str_t * str)
+{
+    const char * space = " \t\n";
+
+    for (size_t i = 0; i < str->len; i++) {
+        if (str_chr(space, str->data[i]) == NULL) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static list_str_t * delete_commentary(list_str_t * text)
+{
+    str_t * line = NULL;
+
+    for (size_t i = 0; i < text->len; i++) {
+        line = text->data[i];
+        while (str_chr(line->data, '#')) {
+            delete(line, line->len);
+        }
+        if (line->len == 0 || isonlyspace(line)) {
+            delete(text, i);
+            i--;
+        }
+    }
+
+    return text;
+}
+
 list_str_t * read_content(const char * filename)
 {
     FILE * file = fopen(filename, "r");
@@ -26,7 +56,7 @@ list_str_t * read_content(const char * filename)
         write_error("Empty file.");
         return NULL;
     }
-    return split(text, "\n", TRUE, FALSE);
+    return delete_commentary(split(text, "\n", TRUE, FALSE));
 }
 
 champ_t * parse_asm(const char * filename)
@@ -41,13 +71,14 @@ champ_t * parse_asm(const char * filename)
     header = parse_header(text);
     if (header == NULL)
         return NULL;
-    champ = malloc(sizeof(champ_t));
-    champ->hdr = header;
-    champ->cmd = command;
-    return champ;
-}
-    // // command = get_command(text);
+    // command = parse_command(text);
     // if (command == NULL) {
     //     free(header);
     //     return NULL;
     // }
+    champ = malloc(sizeof(champ_t));
+    // header->prog_size = big_endian(command->len);
+    champ->hdr = header;
+    champ->cmd = command;
+    return champ;
+}

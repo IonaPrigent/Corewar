@@ -33,11 +33,10 @@ int main(UNUSED int ac, const char * const * av)
     champ = parse_asm(av[1]);
     if (champ == NULL)
         return ERROR;
-    if (write_header(av[1], champ->hdr) == ERROR) {
+    if (write_champ(av[1], champ) == ERROR) {
         free_champ(champ);
         return ERROR;
     }
     dprint(2, "%sdone.%s\n", GREEN, RESET);
     return SUCCESS;
 }
-    //else parse commands

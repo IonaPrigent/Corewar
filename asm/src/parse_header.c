@@ -47,7 +47,6 @@ static header_t * make_header(str_t * name, str_t * comment)
 
     header->magic = big_endian(COREWAR_EXEC_MAGIC);
     mem_cpy(header->prog_name, name->data, name->len);
-    header->prog_size = big_endian(22);
     mem_cpy(header->comment, comment->data, comment->len);
 
     return header;
@@ -64,7 +63,7 @@ header_t * parse_header(list_str_t * text)
 
     name = valid_info(text->data[0], NAME_CMD_STR, PROG_NAME_LENGTH);
     if (name == NULL) {
-        write_error("Invalid programme name");
+        write_error("Invalid program name");
         return NULL;
     }
     comment = valid_info(text->data[1], COMMENT_CMD_STR, COMMENT_LENGTH);
@@ -72,6 +71,7 @@ header_t * parse_header(list_str_t * text)
         write_error("Invalid comment");
         return NULL;
     }
-
+    delete(text, 0);
+    delete(text, 0);
     return make_header(name, comment);
 }
