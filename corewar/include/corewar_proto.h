@@ -20,7 +20,7 @@ int vm_core(int ac, char const *av[]);
 */
 int get_value_from_mem(octet_t const *memory, int *i, int size);
 
-    #define GET_MEM_IND(mem, index) (get_value_from_mem(mem, index, IND_SIZE))
+    #define GET_MEM_IND(mem, index) ((short)get_value_from_mem(mem, index, IND_SIZE))
     #define GET_MEM_DIR(mem, index) (get_value_from_mem(mem, index, DIR_SIZE))
 
 /*
