@@ -31,7 +31,7 @@ static char **parse_cor_file(char *filename)
     return NULL;
 }
 
-static int get_nb_processes(int ac, char **av)
+static int get_nb_processes(int ac, char const *av[])
 {
     int nb_processes = 0;
 
@@ -43,11 +43,11 @@ static int get_nb_processes(int ac, char **av)
 }
 
 static int init_single_process(process_t *all_champ, octet_t memory[MEM_SIZE],
-int a)
+int a, int pc)
 {
     all_champ->wait = 0;
     all_champ->name = 0;
-    all_champ->PC = 0;
+    all_champ->PC = pc;
     all_champ->carry = 0;
 
     for (int i = 0; all_champ->registers[i]; i++) {
@@ -63,12 +63,16 @@ int ac, char const *av[])
 {
     int nb_process = get_nb_processes(ac, av);
     *all_champ = malloc(sizeof(process_t) * nb_process);
+    int void_between = MEM_SIZE / nb_process;
 
-    for (int a = 0; all_champ[a]; a++)
-        init_single_process(all_champ[a], memory, a);
-
+    if (*all_champ == NULL) {
+        return ERROR;
+    }
     for (int i = 0; i < MEM_SIZE; ++i) {
         memory[i] = 0;
     }
+    for (int i = 0; i < nb_process; i++)
+        init_single_process(all_champ[i], memory, i, i * void_between);
+
     return SUCESS;
 }

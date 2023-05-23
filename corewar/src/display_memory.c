@@ -35,7 +35,7 @@ static void display_column(int i)
 static void print_line_octet(octet_t *line)
 {
     for (int i = 0; i < 0x20; ++i) {
-        my_puthex(line[i] & 0xf0 >> 4);
+        my_puthex((line[i] >> 4) & 0x0f);
         my_puthex(line[i] & 0x0f);
         write(1, " ", 1);
     }

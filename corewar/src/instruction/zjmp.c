@@ -13,6 +13,7 @@
 int zjump(octet_t memory[MEM_SIZE], process_t *process)
 {
     int index = 0;
+    int i = 1;
 
     if (process->wait < 20) {
         return SUCESS;
@@ -21,7 +22,8 @@ int zjump(octet_t memory[MEM_SIZE], process_t *process)
         reset_process(process, 3);
         return SUCESS;
     }
-    index = GET_MEM_IND(memory, process->PC + 1);
+    i += process->PC;
+    index = GET_MEM_IND(memory, &i);
     index = process->PC + index % IDX_MOD;
     index %= MEM_SIZE;
     process->PC = index;

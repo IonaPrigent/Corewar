@@ -49,16 +49,16 @@ void read_name(int const fd, process_t *process)
 
 int vm_core(int ac, char const *av[])
 {
-    octet_t arena[MEM_SIZE];
-    process_t *all_champ = NULL;
-
+    corewar_t core;
+    core.nb_processes = 0;
+    core.processes = 0;
+    
     if (ac == 2 && my_strcmp(av[1], "-h") == 0)
         return helper();
     else if (ac < 3)
         return EXIT_ERROR;
-    if (init_all(&all_champ, arena, ac, av) == ERROR)
+    if (init_all(&(core.processes), core.mem, ac, av) == ERROR)
         return EXIT_ERROR;
-
-    display_memory(arena);
+    display_memory(core.mem);
     return SUCESS;
 }

@@ -22,8 +22,14 @@ typedef struct process {
     int PC;
     int wait;
     int time_left;
-    int registers[REG_NUMBER];
+    direct_t registers[REG_NUMBER];
     int carry;
 } process_t;
+
+typedef struct corewar {
+    process_t *processes;
+    int nb_processes;
+    char mem[MEM_SIZE];
+} corewar_t;
 
 #endif /* !corewar_type_H_ */

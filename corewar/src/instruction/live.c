@@ -13,7 +13,7 @@
 int live(octet_t memory[MEM_SIZE], process_t *process)
 {
     int i = 1;
-    int player_number = 0;
+    direct_t player_number = process->registers[0];
 
     if (process->wait < 10)
         return SUCESS;

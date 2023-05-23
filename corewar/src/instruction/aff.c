@@ -5,6 +5,8 @@
 ** aff
 */
 
+#include <unistd.h>
+
 #include "corewar_macros.h"
 #include "macros.h"
 #include "corewar_type.h"
@@ -12,10 +14,15 @@
 
 int affich(octet_t memory[MEM_SIZE], process_t *process)
 {
-    octet_t reg_id = GET_OCTET(memory, process->PC, 1);
+    int reg_id = GET_OCTET(memory, process->PC, 1);
 
     if (process->wait < 2)
         return SUCESS;
-    reset_process(process->PC, 2);
+    if (!IS_REG(reg_id)) {
+        return ERROR;
+    }
+    --reg_id;
+    write(STDOUT_FILENO, &(process->registers[reg_id]), 1);
+    reset_process(process, 2);
     return SUCESS;
 }
