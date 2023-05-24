@@ -5,6 +5,8 @@
 ** op.c for corewar
 */
 
+#include <unistd.h> // pour ambroise sinon il va sérer. -> write
+
 #include "asm.h"
 
 int write_champ(const char * filename, champ_t * champ)

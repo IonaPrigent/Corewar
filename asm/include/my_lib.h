@@ -12,5 +12,6 @@
     #include "my_utils.h"
     #include "my_print.h"
     #include "my_def.h"
+    #include "my_ctype.h"
 
 #endif /* MY_LIB */

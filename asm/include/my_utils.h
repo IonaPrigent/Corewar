@@ -28,6 +28,8 @@ void * mem_set(void * dst, int c, size_t n);
 char * my_itoa(long int nbr);
 char * my_ftoa(double nbr, int precision);
 
+long int my_atoi(const char * str);
+
 double power(int x, int p);
 
 void * vfree(size_t n, ...);

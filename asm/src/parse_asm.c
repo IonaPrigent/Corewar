@@ -64,7 +64,7 @@ champ_t * parse_asm(const char * filename)
     AUTOFREE list_str_t * text = read_content(filename);
     champ_t * champ = NULL;
     header_t * header = NULL;
-    vec_t * command = NULL;
+    list_t * command = NULL;
 
     if (text == NULL)
         return NULL;

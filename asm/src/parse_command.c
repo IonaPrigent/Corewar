@@ -7,57 +7,110 @@
 
 #include "asm.h"
 
-static int valid_label(dict_t * dict, str_t * label)
+// cmd = list of vec
+// vec = bytes of the line
+
+// label = dict[command_name, vec]
+// vec[0] = line of the label
+// vec[1, 2, 3] = line to insert, position, number of bytes
+
+static int valid_command_name(str_t * name)
 {
-    for (size_t i = 0; i < label->len; i++) {
-        if (str_chr(LABEL_CHARS, label->data[i]) == NULL) {
-            dprint(2, "%sInvalid label name: %o\n", RED_ERROR,
-            label);
-            return 0;
+    for (int i = 0; op_tab[i].mnemonique != NULL; i++) {
+        if (str_cmp(name->data, op_tab[i].mnemonique) == 0) {
+            return op_tab[i].code;
         }
     }
-    
-    if (in_dict(dict, label->data, NULL)) {
-        dprint(2, "%sMultiple definition of the same label: %o\n", RED_ERROR,
-        label);
-        return 0;
-    }
-    return 1;
+    return -1;
 }
 
-static dict_t * get_label(list_str_t * text)
+//valid args and add them to byte
+static int valid_command_args(list_str_t * args, op_t * op, list_t * cmd,
+    dict_t * label)
 {
-    dict_t * dict = DICT(4);
+    // should do all the checks on args and if it passes all of them, add it to cmd
+    if (op->nbr_args != (char) args->len) {
+        dprint(2, "%sWrong number of arguments for the operation \"%s\".\n",
+        RED_ERROR, op->mnemonique);
+        return 1;
+    }
+    for (size_t i = 0; i < args->len; i++) {
+        if (valid_arg(args->data[i], op->type[i], label, cmd) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// valid command should receive the list cmd instead of the vec byte
+static int valid_line(list_str_t * line, list_t ** cmd, dict_t * label)
+{
+    int cmd_code = valid_command_name(line->data[0]);
+    AUTOFREE str_t * tmp = NULL;
+    vec_t * byte = NULL;
+
+    if (cmd_code == -1) {
+        return 1;
+    }
+    byte = VEC(sizeof(char), 10);
+    append(&byte, &cmd_code);
+    delete(line, 0);
+    tmp = STR("");
+    for (size_t i = 0; i < line->len; i++)
+        append(&tmp, line->data[i]->data);
+    if (valid_command_args(split(tmp, ",", FALSE, FALSE),
+    &(op_tab[cmd_code - 1]), append(cmd, byte), label) == 1) {
+        return 1;
+    }
+    return 0;
+}
+
+static list_t * parse_line(list_str_t * text, dict_t * label)
+{
+    list_t * cmd = LIST(text->len);
     list_str_t * line = NULL;
-    str_t * label = NULL;
+    str_t * tmp = NULL;
 
     for (size_t i = 0; i < text->len; i++) {
-        if (str_chr(text->data[i]->data, ':') == NULL)
-            continue;
         line = split(text->data[i], " \t\n", TRUE, FALSE);
-        label = line->data[0];
-        if (label->data[label->len - 1] != ':') {
-            destroy(line);
+        tmp = line->data[0];
+        if (tmp->data[tmp->len - 1] == ':')
+            delete(line, 0);
+        if (line->len == 0) {
+            append(&cmd, VEC(sizeof(char), 0));
             continue;
         }
-        if (valid_label(dict, delete(label, label->len)))
-            append(&dict, label->data, VEC(sizeof(size_t), 4));
-        else
-            return obj_vfree(2, dict, line);
+        if (valid_line(line, &cmd, label))
+            return obj_vfree(2, cmd, line);
+        destroy(line);
     }
-    return dict;
+    return cmd;
 }
 
-vec_t * parse_command(list_str_t * text)
+list_t * parse_command(list_str_t * text)
 {
     AUTOFREE dict_t * label = get_label(text);
+    list_t * cmd = NULL;
 
-    if (label == NULL) {
+    if (label == NULL)
         return NULL;
-    } else {
-        print("%o\n", label);
+
+    print("%o\n", label);
+    cmd = parse_line(text, label);
+    if (cmd == NULL)
+        return NULL;
+    // set label
+    // return cmd
+
+
+
+    for (int n = 0; op_tab[n].mnemonique != NULL; n++) {
+        for (int i = 0; i < 4; i++) {
+            printf(" %d", op_tab[n].type[i]);
+        }
+        printf("\n");
     }
 
 
-    return NULL;
+    return cmd;
 }
