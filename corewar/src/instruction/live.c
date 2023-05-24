@@ -13,7 +13,7 @@
 int live(octet_t memory[MEM_SIZE], process_t *process)
 {
     int i = 1;
-    direct_t player_number;
+    int player_number;
     corewar_t *core = corewar_store();
 
     if (process->wait < 10)

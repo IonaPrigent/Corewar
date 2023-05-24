@@ -19,6 +19,7 @@ int get_value_from_mem(octet_t const *memory, int *i, int size)
         value <<= 8;
         value += memory[*i % MEM_SIZE];
     }
+    reverse(&value, sizeof(value));
     return value;
 }
 

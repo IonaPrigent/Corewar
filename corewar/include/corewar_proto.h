@@ -54,6 +54,12 @@ void reverse(void *nbr, size_t size);
 
 corewar_t *corewar_store(void);
 
+/*
+*   run operations
+*/
+int exec_instruction(corewar_t *core, process_t *process)
 void reset_process(process_t *process, int i);
+int run_corewar(corewar_t *core, long dump);
+
 
 #endif /* !COREWAR_PROTO_H_ */

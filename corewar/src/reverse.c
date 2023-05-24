@@ -6,11 +6,12 @@
 */
 
 #include <stdio.h>
+#include "corewar_type.h"
 
 void reverse(void *nbr, size_t size)
 {
-    char octet;
-    char *nb = nbr;
+    octet_t octet;
+    octet_t *nb = nbr;
 
     for (size_t i = 0; i < size / 2; ++i) {
         octet = nb[i];

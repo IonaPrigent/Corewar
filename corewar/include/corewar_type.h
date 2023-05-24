@@ -13,8 +13,8 @@
 typedef char octet_t;
 
 typedef octet_t reg_t;
-typedef short indirect_t;
-typedef int direct_t;
+typedef char indirect_t[IND_SIZE];
+typedef char direct_t[DIR_SIZE];
 typedef indirect_t indexe_t;
 
 typedef struct process {
@@ -23,7 +23,7 @@ typedef struct process {
     int wait;
     int time_left;
     int size;
-    direct_t registers[REG_NUMBER];
+    int registers[REG_NUMBER];
     int fd;
     int carry;
 } process_t;
