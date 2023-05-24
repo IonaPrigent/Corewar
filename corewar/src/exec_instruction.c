@@ -17,7 +17,7 @@ bool is_finished(corewar_t *core)
 {
     int id_champ_alive = 0;
     bool has_champ_alive_already_detected = false;
-    
+
     for (int i = 0; i < core->nb_processes; ++i) {
         if (core->processes[i].time_left != 0
         && has_champ_alive_already_detected
@@ -41,7 +41,7 @@ int exec_instruction(corewar_t *core, process_t *process)
         process->PC = (process->PC + 1) % MEM_SIZE;
         return SUCESS;
     }
-    all_instruction[instruction](core->mem, process);
+    all_instruction[(int)instruction](core->mem, process);
     return 0;
 }
 

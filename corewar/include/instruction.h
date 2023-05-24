@@ -15,7 +15,7 @@ typedef int instruction_t(char memory[MEM_SIZE], process_t *process);
 
 instruction_t load;
 instruction_t store;
-instruction_t store_indexe;
+instruction_t store_index;
 instruction_t add;
 instruction_t affich;
 instruction_t and_fct;
@@ -30,7 +30,7 @@ instruction_t sub;
 instruction_t xor_fct;
 instruction_t zjump;
 
-static const instruction_t *all_instruction[] = {
+static instruction_t *const all_instruction[] = {
     live,
     load,
     store,
@@ -41,7 +41,7 @@ static const instruction_t *all_instruction[] = {
     xor_fct,
     zjump,
     load_index,
-    store_indexe,
+    store_index,
     fork_fct,
     long_load,
     long_load_index,
@@ -49,7 +49,7 @@ static const instruction_t *all_instruction[] = {
     affich
 };
 
-    #define NB_INSTRUCTION sizeof(all_instruction) / sizeof(instruction_t *)
-    #define IS_INSTRUCTION(nb) (0 < nb && nb < NB_INSTRUCTION + 1)
+#define NB_INSTRUCTION sizeof(all_instruction) / sizeof(instruction_t *)
+#define IS_INSTRUCTION(nb) (0 < nb && (unsigned int)nb < (int)NB_INSTRUCTION + 1)
 
 #endif /* !INSTRUCTION_H_ */
