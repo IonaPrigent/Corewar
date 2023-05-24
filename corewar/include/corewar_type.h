@@ -18,7 +18,7 @@ typedef int direct_t;
 typedef indirect_t indexe_t;
 
 typedef struct process {
-    char *name;
+    char name[PROG_NAME_LENGTH + 1];
     int PC;
     int wait;
     int time_left;
@@ -33,7 +33,7 @@ typedef struct corewar {
     int nb_processes;
     int nb_original_prog;
     char mem[MEM_SIZE];
-    char **filenames;
+    char const **filenames;
     char **adresses;
 } corewar_t;
 

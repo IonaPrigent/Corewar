@@ -8,6 +8,7 @@
 #include "corewar_type.h"
 #include "corewar_macros.h"
 #include <stdbool.h>
+#include <stdio.h>
 
 #ifndef COREWAR_PROTO_H_
     #define COREWAR_PROTO_H_
@@ -48,10 +49,8 @@ void display_memory(octet_t memory[]);
 *   initialisation
 */
 int init_all(corewar_t *core, char const *av[]);
-int get_prog_name(int fd, process_t *process);
-int check_magic_number(int fd, header_t *program);
-int get_prog_size(int fd, process_t *process);
 int get_program(int fd, process_t *process, char mem[MEM_SIZE], int pc);
+void reverse(void *nbr, size_t size);
 
 corewar_t *corewar_store(void);
 

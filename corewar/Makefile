@@ -38,7 +38,8 @@ BASE_SRC	=	vm_core.c			\
 				get_value.c			\
 				set_register.c		\
 				corewar_save.c		\
-				parse_cor_file.c	\
+				copy_prog.c			\
+				reverse.c			\
 
 SRC_LIB		=	$(addprefix lib/my/,	\
 				my_strcmp.c				\
@@ -48,6 +49,7 @@ SRC_LIB		=	$(addprefix lib/my/,	\
 				my_putstr.c				\
 				my_strlen.c				\
 				my_strcpy.c				\
+				my_strdup.c				\
 				)
 
 SRC	=	$(addprefix src/,	\
@@ -80,6 +82,8 @@ debug:	CC = clang
 debug:	LDFLAGS += -fsanitize=address
 debug:	re
 
+redebug:	fclean debug
+
 re:	fclean all
 
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re debug redebug
