@@ -17,6 +17,8 @@ int lfork(octet_t mem[MEM_SIZE], process_t *process)
     int i = process->PC + 1;
     int index = GET_MEM_IND(mem, &i);
 
+    if (process->wait < op_tab[LFORK].nbr_cycles)
+        return SUCESS;
     core->nb_processes += 1;
     core->processes = realloc(core->processes,
     sizeof(process_t) * core->nb_processes);

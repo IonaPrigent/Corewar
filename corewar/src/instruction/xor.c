@@ -20,7 +20,7 @@ int xor_fct(octet_t memory[MEM_SIZE], process_t *process)
     int reg_id3 = 0;
     int result = 0;
 
-    if (process->wait < 6)
+    if (process->wait < op_tab[XOR].nbr_cycles)
         return SUCESS;
     if (THRD_PARAM(parameters) != PARAM_REG
     || SECO_PARAM(parameters) != PARAM_REG

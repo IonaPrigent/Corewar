@@ -15,12 +15,13 @@ int get_value_from_mem(octet_t const *memory, int *i, int size)
 {
     int value = 0;
     int j = 0;
+    octet_t *ptr = (octet_t *)&value;
 
     for (; j < size; j += 1) {
-        value <<= 8;
-        value += memory[*i % MEM_SIZE];
+        ptr[j] = memory[*i % MEM_SIZE];
         *i += 1;
     }
+    reverse(&value, size);
     return value;
 }
 

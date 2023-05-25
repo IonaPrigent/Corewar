@@ -11,6 +11,8 @@
 
 void set_register(process_t *process, int reg_id, int value, bool mod_carry)
 {
+    dprintf(2, "value :%x\n", value % 256);
+
     process->registers[reg_id] = value;
     if (mod_carry) {
         process->carry = (value == 0);

@@ -16,7 +16,7 @@ int long_load_index(octet_t memory[MEM_SIZE], process_t *process)
     int i = process->PC + 2;
     int value = 0;
 
-    if (process->wait < 50)
+    if (process->wait < op_tab[LLDI].nbr_cycles)
         return SUCESS;
     if (THRD_PARAM(parameters) != PARAM_REG)
         return ERROR;

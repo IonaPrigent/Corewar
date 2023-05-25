@@ -25,7 +25,7 @@ int store(octet_t memory[MEM_SIZE], process_t *process)
     int register_value = 0;
     int sec_param = 0;
 
-    if (process->wait < 5) return SUCESS;
+    if (process->wait < op_tab[ST].nbr_cycles) return SUCESS;
     if (FSRT_PARAM(param) != PARAM_REG)
         return ERROR;
     register_value = get_value_from_param_ind(memory, FSRT_PARAM(param),

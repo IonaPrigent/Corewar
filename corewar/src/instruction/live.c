@@ -26,7 +26,7 @@ int live(octet_t memory[MEM_SIZE], process_t *process)
     int player_number;
     corewar_t *core = corewar_store();
 
-    if (process->wait < 10)
+    if (process->wait < op_tab[LIVE].nbr_cycles)
         return SUCESS;
     player_number = GET_MEM_DIR(memory, &i);
     for (int j = 0; j < core->nb_original_prog; ++j) {

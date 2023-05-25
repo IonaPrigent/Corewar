@@ -18,7 +18,7 @@ int load(octet_t memory[MEM_SIZE], process_t *process)
     int reg_id = 0;
     octet_t param = PARAMETERS(memory, process->PC);
 
-    if (process->wait < 5)
+    if (process->wait < op_tab[LD].nbr_cycles)
         return SUCESS;
     if (SECO_PARAM(param) != PARAM_REG)
         return ERROR;
