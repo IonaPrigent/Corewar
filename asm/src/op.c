@@ -40,6 +40,13 @@ static const char * no_code_byte[] = {
     "lfork"
 };
 
+static const char * indexes[] = {
+    "zjmp",
+    "ldi",
+    "sti",
+    "fork"
+};
+
 int has_coding_byte(const char * name)
 {
     for (int i = 0; i < 4; i++) {
@@ -58,4 +65,14 @@ void add_coding_byte(vec_t ** byte, int op_idx)
     if (has_coding_byte(name)) {
         append(byte, &c);
     }
+}
+
+size_t is_index(const char * str)
+{
+    for (int i = 0; i < 4; i++) {
+        if (str_cmp(str, indexes[i]) == 0) {
+            return 2;
+        }
+    }
+    return 4;
 }

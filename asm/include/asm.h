@@ -41,7 +41,10 @@ dict_t * get_label(list_str_t * text);
 void add_coding_byte(vec_t ** byte, int op_idx);
 int has_coding_byte(const char * name);
 
-// tmp: should be write_champ
+void set_label(list_t * cmd, dict_t * label);
+
+size_t is_index(const char * str);
+
 int write_champ(const char * filename, champ_t * champ);
 
 #endif /* MY_ASM */

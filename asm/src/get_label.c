@@ -15,7 +15,7 @@ static int valid_label(dict_t * dict, str_t * label)
             return 0;
         }
     }
-    
+
     if (in_dict(dict, label->data, NULL)) {
         dprint(2, "%sMultiple definition of the same label: %o\n", RED_ERROR,
         label);
@@ -28,22 +28,20 @@ dict_t * get_label(list_str_t * text)
 {
     dict_t * dict = DICT(4);
     list_str_t * line = NULL;
-    str_t * label = NULL;
     vec_long_t * vec = NULL;
 
     for (size_t i = 0; i < text->len; i++) {
         if (str_chr(text->data[i]->data, ':') == NULL)
             continue;
         line = split(text->data[i], " \t\n", TRUE, FALSE);
-        label = line->data[0];
-        if (label->data[label->len - 1] != ':') {
+        if (line->data[0]->data[line->data[0]->len - 1] != ':') {
             destroy(line);
             continue;
         }
-        if (valid_label(dict, delete(label, label->len))) {
+        if (valid_label(dict, delete(line->data[0], line->data[0]->len))) {
             vec = VEC(sizeof(long), 4);
             append(&vec, &i);
-            append(&dict, label->data, vec);
+            append(&dict, line->data[0]->data, vec);
         } else
             return obj_vfree(2, dict, line);
     }

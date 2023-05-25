@@ -15,28 +15,21 @@ str_t * vec_to_string(vec_t * vec, str_t ** buff)
     str_t * str = NULL;
     char * nbr = NULL;
 
-    if (buff == NULL) {
+    if (buff == NULL)
         str = create(STR, "[");
-    } else {
-        str = * buff;
-        append(&str, "[");
-    }
+    else
+        str = append(buff, "[");
     for (size_t i = 0; i < vec->len; i++) {
         nbr = my_itoa(((long *) vec->data)[i]);
         append(&str, nbr);
         append(&str, ", ");
         free(nbr);
     }
-
     if (str->data[str->len - 1] == ' ') {
         delete(str, str->len);
         delete(str, str->len);
     }
     append(&str, "]");
-
-    if (buff != NULL) {
-        *buff = str;
-    }
-
+    if (buff != NULL) *buff = str;
     return str;
 }

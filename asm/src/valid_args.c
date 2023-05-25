@@ -7,18 +7,11 @@
 
 #include "asm.h"
 
-static const char * indexes[] = {
-    "zjmp",
-    "ldi",
-    "sti",
-    "fork"
-};
-
 static int is_valid_reg(str_t * arg, list_t * cmd, int * op_info)
 {
     int nbr = 0;
     int i = op_info[1];
-    op_t * op = &(op_tab[op_info[0]]);    
+    op_t * op = &(op_tab[op_info[0]]);
 
     if (!is_number(arg->data + 1, 0)) {
         write_error("Invalid register value. (you wrote shit)");
@@ -36,7 +29,6 @@ static int is_valid_reg(str_t * arg, list_t * cmd, int * op_info)
     return 0;
 }
 
-// size is for dir/indirect/index size = array with index
 static int is_valid_label(char * str, dict_t * label, list_t * cmd,
     size_t size)
 {
@@ -46,30 +38,21 @@ static int is_valid_label(char * str, dict_t * label, list_t * cmd,
 
     if (in_dict(label, str, NULL)) {
         buck = label->buck[hash];
-        index = key_in_bucket(buck, str, &index);
-        append(&(buck->data[index + 1]), &(cmd->len));
-        append(&(buck->data[index + 1]), &(((vec_t *) cmd->data)->len));
-        append(&(buck->data[index + 1]), &(size));
+        key_in_bucket(buck, str, &index);
+        append(&(buck->data[index + 1]), (size_t[]){cmd->len - 1});
+        append(&(buck->data[index + 1]),
+        &(((vec_t *) cmd->data[cmd->len - 1])->len));
+        append(&(buck->data[index + 1]), &size);
         for (size_t i = 0; i < size; i++) {
-            append(&(cmd->data[cmd->len - 1]), NULL);
+            append(&(cmd->data[cmd->len - 1]), (size_t[]){0});
         }
         return 0;
     }
     return 1;
 }
 
-static size_t is_index(const char * str)
-{
-    printf(":%s:\n", str);
-    for (int i = 0; i < 4; i++) {
-        if (str_cmp(str, indexes[i]) == 0) {
-            return 2;
-        }
-    }
-    return 4;
-}
-
-static int is_valid_dir(str_t * arg, int * op_info, dict_t * label, list_t * cmd)
+static int is_valid_dir(str_t * arg, int * op_info, dict_t * label,
+    list_t * cmd)
 {
     int nbr = 0;
     char byte = 0;
@@ -77,40 +60,37 @@ static int is_valid_dir(str_t * arg, int * op_info, dict_t * label, list_t * cmd
     size_t isindex = is_index(op->mnemonique);
     int i = op_info[1];
 
-    if (arg->data[1] == ':') {
+    if (has_coding_byte(op->mnemonique))
+        ((vec_t *) cmd->data[cmd->len - 1])->data[1] |= 0b10000000 >> (2 * i);
+    if (arg->data[1] == ':')
         return is_valid_label(arg->data + 2, label, cmd, isindex);
-    }
     if (!is_number(arg->data + 1, 0)) {
         write_error("Invalid direct value. (you wrote shit)");
         return 1;
     }
-    if (has_coding_byte(op->mnemonique)) {
-        ((vec_t *) cmd->data[cmd->len - 1])->data[1] |= 0b10000000 >> (2 * i);
-    }
     nbr = my_atoi(arg->data + 1);
-    for (size_t i = 0; i < isindex; i++) {//here check if bytes are ok
+    for (size_t i = 0; i < isindex; i++) {
         byte = (nbr >> ((isindex - 1 - i) * 8)) & 0xff;
         append(&(cmd->data[cmd->len - 1]), &byte);
     }
     return 0;
 }
 
-static int is_valid_ind(str_t * arg, int * op_info, dict_t * label, list_t * cmd)
+static int is_valid_ind(str_t * arg, int * op_info, dict_t * label,
+    list_t * cmd)
 {
     int nbr = 0;
     char byte = 0;
     op_t * op = &(op_tab[op_info[0]]);
     int i = op_info[1];
 
-    if (arg->data[0] == ':') {
+    if (has_coding_byte(op->mnemonique))
+        ((vec_t *) cmd->data[cmd->len - 1])->data[1] |= 0b11000000 >> (2 * i);
+    if (arg->data[0] == ':')
         return is_valid_label(arg->data + 2, label, cmd, 2);
-    }
     if (!is_number(arg->data, 0)) {
         write_error("Invalid indirect value. (you wrote shit)");
         return 1;
-    }
-    if (has_coding_byte(op->mnemonique)) {
-        ((vec_t *) cmd->data[cmd->len - 1])->data[1] |= 0b11000000 >> (2 * i);
     }
     nbr = my_atoi(arg->data);
     for (int i = 0; i < 2; i++) {
@@ -120,9 +100,9 @@ static int is_valid_ind(str_t * arg, int * op_info, dict_t * label, list_t * cmd
     return 0;
 }
 
-// op should be an index[op_index, n args]
 int valid_arg(str_t * arg, int * op_info, dict_t * label, list_t * cmd)
 {
+    printf(":%s:\n", op_tab[op_info[0]].mnemonique);
     if (arg->data[0] == 'r') {
         if (!(op_tab[op_info[0]].type[op_info[1]] & T_REG)) {
             write_error("The instruction does not support registers.");

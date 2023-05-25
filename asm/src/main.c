@@ -31,8 +31,10 @@ int main(int ac, const char * const * av)
         return SUCCESS;
     }
     champ = parse_asm(av[1]);
-    if (champ == NULL)
+    if (champ == NULL) {
+        dprint(2, "%s\n", RED_ERROR);
         return ERROR;
+    }
     if (write_champ(av[1], champ) == ERROR) {
         free_champ(champ);
         return ERROR;

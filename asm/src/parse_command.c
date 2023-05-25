@@ -24,11 +24,9 @@ static int valid_command_name(str_t * name)
     return -1;
 }
 
-//valid args and add them to byte
 static int valid_command_args(list_str_t * args, int op_idx, list_t * cmd,
     dict_t * label)
 {
-    // should do all the checks on args and if it passes all of them, add it to cmd
     if (op_tab[op_idx].nbr_args != (char) args->len) {
         dprint(2, "%sWrong number of arguments for the operation \"%s\".\n",
         RED_ERROR, op_tab[op_idx].mnemonique);
@@ -42,25 +40,24 @@ static int valid_command_args(list_str_t * args, int op_idx, list_t * cmd,
     return 0;
 }
 
-// valid command should receive the list cmd instead of the vec byte
 static int valid_line(list_str_t * line, list_t ** cmd, dict_t * label)
 {
     int cmd_code = valid_command_name(line->data[0]);
     AUTOFREE str_t * tmp = NULL;
-    vec_t * byte = NULL;
+    vec_t * bytes = NULL;
 
     if (cmd_code == -1) {
         return 1;
     }
-    byte = VEC(sizeof(char), 10);
-    append(&byte, &cmd_code);
-    add_coding_byte(&byte, cmd_code - 1);
+    bytes = VEC(sizeof(char), 10);
+    append(&bytes, &cmd_code);
+    add_coding_byte(&bytes, cmd_code - 1);
     delete(line, 0);
     tmp = STR("");
     for (size_t i = 0; i < line->len; i++)
         append(&tmp, line->data[i]->data);
     if (valid_command_args(split(tmp, ",", FALSE, FALSE), cmd_code - 1,
-    append(cmd, byte), label) == 1) {
+    append(cmd, bytes), label) == 1) {
         return 1;
     }
     return 0;
@@ -99,8 +96,6 @@ list_t * parse_command(list_str_t * text)
     cmd = parse_line(text, label);
     if (cmd == NULL)
         return NULL;
-
-    // TODO set labels
-
+    set_label(cmd, label);
     return cmd;
 }
