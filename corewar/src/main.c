@@ -2,10 +2,12 @@
 ** EPITECH PROJECT, 2023
 ** Corewar
 ** File description:
-** main
+** main file of vm
 */
 
-int main(int ac, char **av)
+#include "corewar_proto.h"
+
+int main(int ac, char const *av[])
 {
-    return 0;
+    return vm_core(ac, av);
 }
