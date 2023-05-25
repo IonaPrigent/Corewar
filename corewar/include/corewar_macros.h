@@ -22,7 +22,6 @@
     #define FRTH_PARAM(param) (param & PARAM_MASK)
     #define IS_REG(reg) (0 < reg && reg <= REG_NUMBER)
 
-    #define REPLACE_PC(PC, i) ((PC + i) % MEM_SIZE)
 
     #define REG_LEN 1
     #define IND_LEN IND_SIZE

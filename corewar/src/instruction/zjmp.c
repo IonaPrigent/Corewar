@@ -13,13 +13,13 @@
 int zjump(octet_t memory[MEM_SIZE], process_t *process)
 {
     int index = 0;
-    int i = 1;
+    int i = process->PC + 1;
 
     if (process->wait < 20) {
         return SUCESS;
     }
     if (process->carry != 1) {
-        reset_process(process, 3);
+        reset_process(process, process->PC + 3);
         return SUCESS;
     }
     i += process->PC;

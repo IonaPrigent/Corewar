@@ -14,18 +14,19 @@
 int get_value_from_mem(octet_t const *memory, int *i, int size)
 {
     int value = 0;
+    int j = 0;
 
-    for (; *i < size; *i += 1) {
+    for (; j < size; j += 1) {
         value <<= 8;
         value += memory[*i % MEM_SIZE];
+        *i += 1;
     }
-    reverse(&value, sizeof(value));
     return value;
 }
 
 void reset_process(process_t *process, int i)
 {
-    process->PC = REPLACE_PC(process->PC, i);
+    process->PC = i % MEM_SIZE;
     process->wait = 0;
 }
 

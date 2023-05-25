@@ -13,7 +13,7 @@
 
 int add(octet_t memory[MEM_SIZE], process_t *process)
 {
-    int i = 2;
+    int i = process->PC + 2;
     octet_t parameters = PARAMETERS(memory, process->PC);
     int reg_id1 = 0;
     int reg_id2 = 0;

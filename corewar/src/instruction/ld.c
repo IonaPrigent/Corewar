@@ -14,7 +14,7 @@
 int load(octet_t memory[MEM_SIZE], process_t *process)
 {
     int index = 0;
-    int i = 2;
+    int i = process->PC + 2;
     int reg_id = 0;
     octet_t param = PARAMETERS(memory, process->PC);
 

@@ -20,9 +20,9 @@ header_t *header)
 {
     char prog[header->prog_size];
 
-    if (read(fd, prog, header->prog_size) == -1)
+    if (read(fd, prog, header->prog_size) != header->prog_size)
         return 0;
-    for (int i = 0; prog[i]; ++i) {
+    for (int i = 0; i < header->prog_size; ++i) {
         mem[(process->PC + i) % MEM_SIZE] = prog[i];
     }
     return 0;

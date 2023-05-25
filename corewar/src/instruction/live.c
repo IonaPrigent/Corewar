@@ -22,13 +22,12 @@ static void diplay_alive(char const *name, int id)
 
 int live(octet_t memory[MEM_SIZE], process_t *process)
 {
-    int i = 1;
+    int i = process->PC + 1;
     int player_number;
     corewar_t *core = corewar_store();
 
     if (process->wait < 10)
         return SUCESS;
-    i += process->PC;
     player_number = GET_MEM_DIR(memory, &i);
     for (int j = 0; j < core->nb_original_prog; ++j) {
         if (core->all_names[j].id == player_number) {

@@ -13,7 +13,7 @@
 int load_index(octet_t memory[MEM_SIZE], process_t *process)
 {
     octet_t parameters = PARAMETERS(memory, process->PC);
-    int i = 2;
+    int i = process->PC + 2;
     int value = 0;
 
     if (process->wait < 25)

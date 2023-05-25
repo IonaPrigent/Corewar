@@ -38,9 +38,9 @@ name_t *name)
         name->name[i] = header.prog_name[i];
     if (header.magic != COREWAR_EXEC_MAGIC)
         return 1;
+    process->PC = pc;
     get_program(process->fd, process, mem, &header);
     close(process->fd);
-    process->PC = pc;
     process->time_left = CYCLE_TO_DIE;
     for (int i = 0; i < REG_NUMBER; i++)
         process->registers[i] = 0;

@@ -21,7 +21,7 @@ static void store_in_reg(int registers[REG_NUMBER], int value, int reg)
 int store(octet_t memory[MEM_SIZE], process_t *process)
 {
     octet_t param = PARAMETERS(memory, process->PC);
-    int i = 2;
+    int i = process->PC + 2;
     int register_value = 0;
     int sec_param = 0;
 
