@@ -15,12 +15,15 @@
 #include "corewar_type.h"
 #include "my.h"
 
-int get_program(int fd, process_t *process, char mem[MEM_SIZE], int pc)
+int get_program(int fd, process_t *process, char mem[MEM_SIZE],
+header_t *header)
 {
-    char c;
+    char prog[header->prog_size];
 
-    for (int i = 0; i < process->size && read(fd, &c, 1) == 1; ++i) {
-        mem[(pc + i) % MEM_SIZE] = c;
+    if (read(fd, prog, header->prog_size) == -1)
+        return 0;
+    for (int i = 0; prog[i]; ++i) {
+        mem[(process->PC + i) % MEM_SIZE] = prog[i];
     }
     return 0;
 }

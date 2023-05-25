@@ -21,7 +21,6 @@ static void init_empty_process(process_t *process)
 {
     process->carry = 0;
     process->PC = 0;
-    process->size = 0;
     process->time_left = CYCLE_TO_DIE;
     process->wait = 0;
 }
@@ -37,10 +36,9 @@ name_t *name)
     reverse(&header.prog_size, sizeof(header.prog_size));
     for (int i = 0; i < PROG_NAME_LENGTH + 1; ++i)
         name->name[i] = header.prog_name[i];
-    process->size = header.prog_size;
     if (header.magic != COREWAR_EXEC_MAGIC)
         return 1;
-    get_program(process->fd, process, mem, pc);
+    get_program(process->fd, process, mem, &header);
     close(process->fd);
     process->PC = pc;
     process->time_left = CYCLE_TO_DIE;
