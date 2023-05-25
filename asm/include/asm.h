@@ -34,9 +34,12 @@ champ_t * parse_asm(const char * filename);
 header_t * parse_header(list_str_t * text);
 list_t * parse_command(list_str_t * text);
 
-int valid_arg(str_t * arg, char type, dict_t * label, list_t * cmd);
+int valid_arg(str_t * arg, int * op_info, dict_t * label, list_t * cmd);
 
 dict_t * get_label(list_str_t * text);
+
+void add_coding_byte(vec_t ** byte, int op_idx);
+int has_coding_byte(const char * name);
 
 // tmp: should be write_champ
 int write_champ(const char * filename, champ_t * champ);

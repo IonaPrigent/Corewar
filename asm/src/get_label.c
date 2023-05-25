@@ -11,8 +11,7 @@ static int valid_label(dict_t * dict, str_t * label)
 {
     for (size_t i = 0; i < label->len; i++) {
         if (str_chr(LABEL_CHARS, label->data[i]) == NULL) {
-            dprint(2, "%sInvalid label name: %o\n", RED_ERROR,
-            label);
+            dprint(2, "%sInvalid label name: %o\n", RED_ERROR, label);
             return 0;
         }
     }

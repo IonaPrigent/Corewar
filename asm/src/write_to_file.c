@@ -9,6 +9,18 @@
 
 #include "asm.h"
 
+static void write_cmd(list_t * cmd, FILE * file)
+{
+    vec_t * line = NULL;
+
+    for (size_t i = 0; i < cmd->len; i++) {
+        line = cmd->data[i];
+        if (line->len > 0) {
+            fwrite(line->data, sizeof(char), line->len, file);
+        }
+    }
+}
+
 int write_champ(const char * filename, champ_t * champ)
 {
     AUTOFREE str_t * str = STR(filename);
@@ -23,7 +35,7 @@ int write_champ(const char * filename, champ_t * champ)
         return ERROR;
 
     fwrite(champ->hdr, sizeof(header_t), 1, file);
-    // fwrite(champ->cmd, sizeof(char), champ->cmd->len, file);
+    write_cmd(champ->cmd, file);
 
     fclose(file);
     return SUCCESS;

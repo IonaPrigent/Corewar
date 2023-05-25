@@ -19,7 +19,7 @@ static void display_help(void)
     print("\nUsage:\n\t./asm file_name[.s]\n\n");
 }
 
-int main(UNUSED int ac, const char * const * av)
+int main(int ac, const char * const * av)
 {
     champ_t * champ = NULL;
 

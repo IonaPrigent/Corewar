@@ -5,7 +5,7 @@
 ** op.c for corewar
 */
 
-#include "op.h"
+#include "asm.h"
 
 op_t op_tab[] = {
     {"live", 1, {T_DIR}, 1, 10, "alive"},
@@ -32,3 +32,30 @@ op_t op_tab[] = {
     {"aff", 1, {T_REG}, 16, 2, "aff"},
     {0, 0, {0}, 0, 0, 0}
 };
+
+static const char * no_code_byte[] = {
+    "live",
+    "zjmp",
+    "fork",
+    "lfork"
+};
+
+int has_coding_byte(const char * name)
+{
+    for (int i = 0; i < 4; i++) {
+        if (str_cmp(name, no_code_byte[i]) == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void add_coding_byte(vec_t ** byte, int op_idx)
+{
+    char * name = op_tab[op_idx].mnemonique;
+    char c = 0;
+
+    if (has_coding_byte(name)) {
+        append(byte, &c);
+    }
+}

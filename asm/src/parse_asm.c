@@ -59,6 +59,19 @@ list_str_t * read_content(const char * filename)
     return delete_commentary(split(text, "\n", TRUE, FALSE));
 }
 
+static void set_prog_size(champ_t * champ)
+{
+    int count = 0;
+    vec_t * line = NULL;
+
+    for (size_t i = 0; i < champ->cmd->len; i++) {
+        line = champ->cmd->data[i];
+        count += line->len;
+    }
+
+    champ->hdr->prog_size = big_endian(count);
+}
+
 champ_t * parse_asm(const char * filename)
 {
     AUTOFREE list_str_t * text = read_content(filename);
@@ -72,13 +85,13 @@ champ_t * parse_asm(const char * filename)
     if (header == NULL)
         return NULL;
     command = parse_command(text);
-    // if (command == NULL) {
-    //     free(header);
-    //     return NULL;
-    // }
+    if (command == NULL) {
+        free(header);
+        return NULL;
+    }
     champ = malloc(sizeof(champ_t));
-    // header->prog_size = big_endian(command->len); // add len of all line
     champ->hdr = header;
     champ->cmd = command;
+    set_prog_size(champ);
     return champ;
 }
