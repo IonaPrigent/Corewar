@@ -16,5 +16,6 @@ int my_putstr(char const *str);
 int my_strlen(char const *str);
 char *my_strcpy(char *dest, char const *src);
 char *my_strdup(char const *str);
+void my_putnbr(unsigned int nb);
 
 #endif /* !MY_H_ */

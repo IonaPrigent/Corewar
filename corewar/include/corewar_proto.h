@@ -51,6 +51,7 @@ void display_memory(octet_t memory[]);
 int init_all(corewar_t *core, char const *av[]);
 int get_program(int fd, process_t *process, char mem[MEM_SIZE], int pc);
 void reverse(void *nbr, size_t size);
+void copy(void *dest, void *src, size_t size);
 
 corewar_t *corewar_store(void);
 

@@ -19,3 +19,13 @@ void reverse(void *nbr, size_t size)
         nb[size - 1 - i] = octet;
     }
 }
+
+void copy(void *dest, void *src, size_t size)
+{
+    octet_t *dest_oct = dest;
+    octet_t *src_oct = src;
+
+    for (size_t i = 0; i < size; ++i) {
+        dest_oct[i] = src_oct[i];
+    }
+}

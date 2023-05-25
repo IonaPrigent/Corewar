@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-CFLAGS += -Wall -Wextra
+CFLAGS += -Wall -Wextra -g3
 
 CPPFLAGS	+=	-iquote ./include
 
@@ -45,6 +45,7 @@ SRC_LIB		=	$(addprefix lib/my/,	\
 				my_strcmp.c				\
 				my_puthex.c				\
 				my_putoct.c				\
+				my_putnbr.c				\
 				my_getnbr.c				\
 				my_putstr.c				\
 				my_strlen.c				\

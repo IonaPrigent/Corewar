@@ -49,7 +49,7 @@ static instruction_t *const all_instruction[] = {
     affich
 };
 
-#define NB_INSTRUCTION sizeof(all_instruction) / sizeof(instruction_t *)
-#define IS_INSTRUCTION(nb) (0 < nb && (unsigned int)nb < (int)NB_INSTRUCTION + 1)
+    #define NB_INSTRUCTION sizeof(all_instruction) / sizeof(instruction_t *)
+    #define IS_INSTRUCTION(nb) (0 < nb && (int)nb < (int)NB_INSTRUCTION + 1)
 
 #endif /* !INSTRUCTION_H_ */

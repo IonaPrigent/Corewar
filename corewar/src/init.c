@@ -20,15 +20,14 @@
 static void init_empty_process(process_t *process)
 {
     process->carry = 0;
-    for (int i = 0; i < PROG_NAME_LENGTH + 1; ++i)
-        process->name[i] = 0;
     process->PC = 0;
     process->size = 0;
-    process->time_left = 0;
+    process->time_left = CYCLE_TO_DIE;
     process->wait = 0;
 }
 
-static int init_single_process(process_t *process, char mem[MEM_SIZE], int pc)
+static int init_single_process(process_t *process, char mem[MEM_SIZE], int pc,
+name_t *name)
 {
     header_t header;
 
@@ -37,7 +36,7 @@ static int init_single_process(process_t *process, char mem[MEM_SIZE], int pc)
     reverse(&header.magic, sizeof(header.magic));
     reverse(&header.prog_size, sizeof(header.prog_size));
     for (int i = 0; i < PROG_NAME_LENGTH + 1; ++i)
-        process->name[i] = header.prog_name[i];
+        name->name[i] = header.prog_name[i];
     process->size = header.prog_size;
     if (header.magic != COREWAR_EXEC_MAGIC)
         return 1;
@@ -61,19 +60,16 @@ static int get_nb_processes(char const *av[])
     return nb_processes;
 }
 
-char const **get_filenames(corewar_t *core, const char *av[])
+static void get_filedescriptors(corewar_t *core, const char *av[])
 {
     int a = 0;
-    char const **filenames = malloc(sizeof(char *) * core->nb_processes + 1);
 
     for (int i = 0; av[i]; i++) {
         if (my_strcmp(av[i] + (my_strlen(av[i]) - 4), ".cor") == 0) {
-            filenames[a] = av[i];
             core->processes[a].fd = open(av[i], O_RDONLY);
             ++a;
         }
     }
-    return filenames;
 }
 
 int init_all(corewar_t *core, char const *av[])
@@ -82,19 +78,19 @@ int init_all(corewar_t *core, char const *av[])
     int space = MEM_SIZE / core->nb_processes;
     core->nb_original_prog = core->nb_processes;
     core->processes = malloc(sizeof(process_t) * core->nb_processes);
-    core->filenames = get_filenames(core, av);
+    core->all_names = malloc(sizeof(name_t) * core->nb_processes);
 
-    if (core->processes == NULL || core->filenames == NULL) {
+    get_filedescriptors(core, av);
+    if (core->processes == NULL || core->all_names == NULL)
         return ERROR;
-    }
-    for (int i = 0; i < MEM_SIZE; ++i) {
+    for (int i = 0; i < MEM_SIZE; ++i)
         core->mem[i] = 0;
-    }
     for (int i = 0; i < core->nb_processes; ++i) {
-        if (core->processes[i].fd == -1) {
+        if (core->processes[i].fd == -1)
             return ERROR;
-        }
-        init_single_process(&(core->processes[i]), core->mem, i * space);
+        init_single_process(&(core->processes[i]), core->mem, i * space,
+        core->all_names + i);
+        core->processes[i].registers[0] = i + 1;
     }
     return SUCESS;
 }

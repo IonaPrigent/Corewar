@@ -23,7 +23,8 @@ int fork_fct(octet_t mem[MEM_SIZE], process_t *process)
     if (core->processes == NULL) {
         return ERROR;
     }
-    core->processes[core->nb_processes - 1] = *process;
+    copy(&(core->processes[core->nb_processes - 1]),
+    process, sizeof(process_t));
     core->processes[core->nb_processes - 1].wait = 0;
     core->processes[core->nb_processes - 1].PC = process->PC + index % IDX_MOD;
     core->processes[core->nb_processes - 1].PC %= MEM_SIZE;

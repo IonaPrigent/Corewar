@@ -16,40 +16,43 @@
 bool is_finished(corewar_t *core)
 {
     int id_champ_alive = 0;
-    bool has_champ_alive_already_detected = false;
+    bool champ_alive_detected = false;
 
     for (int i = 0; i < core->nb_processes; ++i) {
-        if (core->processes[i].time_left != 0
-        && has_champ_alive_already_detected
+        if (core->processes[i].time_left > 0
+        && champ_alive_detected == true
         && core->processes[i].registers[0] != id_champ_alive) {
-            return true;
+            return false;
         }
-        if (core->processes[i].time_left != 0
-        && !has_champ_alive_already_detected) {
-            has_champ_alive_already_detected = true;
+        if (core->processes[i].time_left > 0
+        && champ_alive_detected == false) {
+            champ_alive_detected = true;
             id_champ_alive = core->processes[i].registers[0];
         }
     }
-    return false;
+    return true;
 }
 
 int exec_instruction(corewar_t *core, process_t *process)
 {
     octet_t instruction = core->mem[process->PC];
 
+    process->wait += 1;
+    process->time_left -= 1;
     if (!IS_INSTRUCTION(instruction)) {
         process->PC = (process->PC + 1) % MEM_SIZE;
         return SUCESS;
     }
-    all_instruction[(int)instruction](core->mem, process);
-    return 0;
+    all_instruction[(int)instruction - 1](core->mem, process);
+    return SUCESS;
 }
 
 int run_corewar(corewar_t *core, long dump)
 {
     long i = 0;
 
-    for (; i == dump && !is_finished(core) ; ++i) {
+    dprintf(2, "aze\n%d\n", is_finished(core));
+    for (; i != dump && is_finished(core) == false ; ++i) {
         if (i < 0)
             i = 0;
         for (int j = 0; j < core->nb_processes; ++j) {

@@ -34,6 +34,7 @@ int store_index(octet_t memory[MEM_SIZE], process_t *process)
     i += REG_LEN;
     index += get_value_from_param_ind(memory, SECO_PARAM(parameters),
     process->registers, &i);
+    dprintf(2, "param :%hhx\n", index);
     index += get_value_from_param_ind(memory, THRD_PARAM(parameters),
     process->registers, &i);
     index = (index % IDX_MOD + process->PC) % MEM_SIZE;
