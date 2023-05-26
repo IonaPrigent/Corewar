@@ -41,23 +41,26 @@ int key_in_bucket(const list_t * bucket, const char * key, size_t * buff)
     return 0;
 }
 
-// int in_dict(dict_t * dict, char * key, size_t * buff)
-// {
-//     size_t index = 0;
+// not sure if it works well but well do with it
+int in_dict(dict_t * dict, char * key, item_t ** buff)
+{
+    size_t hash = hash_key(key) % dict->cap;
+    size_t buck_idx = 0;
+    item_t * item = NULL;
 
-//     while (index < dict->len) {
-//         if (str_cmp(key, dict->item[index]->key->data) == 0) {
-//             break;
-//         }
-//         index += 1;
-//     }
+    if (dict->buck[hash] == NULL) {
+        return 0;
+    }
 
-//     if (index != dict->len) {
-//         if (buff != NULL) {
-//             * buff = index;
-//         }
-//         return 1;
-//     }
+    if (key_in_bucket(dict->buck[hash], key, &buck_idx)) {
+        if (buff != NULL) {
+            item = malloc(sizeof(item_t));
+            item->key = dict->buck[hash]->data[buck_idx];
+            item->data = dict->buck[hash]->data[buck_idx + 1];
+            *buff = item;
+        }
+        return 1;
+    }
 
-//     return 0;
-// }
+    return 0;
+}

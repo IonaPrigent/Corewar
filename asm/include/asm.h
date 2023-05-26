@@ -20,7 +20,7 @@
 
 typedef struct champ_s {
     header_t * hdr;
-    vec_t * cmd;
+    list_t * cmd;
 } champ_t;
 
 /**
@@ -31,7 +31,20 @@ int big_endian(int nbr);
 list_str_t * read_content(const char * filename);
 
 champ_t * parse_asm(const char * filename);
+header_t * parse_header(list_str_t * text);
+list_t * parse_command(list_str_t * text);
 
-int write_header(const char * filename, header_t * header);
+int valid_arg(str_t * arg, int * op_info, dict_t * label, list_t * cmd);
+
+dict_t * get_label(list_str_t * text);
+
+void add_coding_byte(vec_t ** byte, int op_idx);
+int has_coding_byte(const char * name);
+
+void set_label(list_t * cmd, dict_t * label);
+
+size_t is_index(const char * str);
+
+int write_champ(const char * filename, champ_t * champ);
 
 #endif /* MY_ASM */
