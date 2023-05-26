@@ -19,6 +19,7 @@ typedef struct formater_s {
 } formater_t;
 
 size_t print(const char * str, ...);
+size_t dprint(int fd, const char * format, ...);
 
 void write_fd(int fd, const char * str);
 void write_error(const char * str);

@@ -17,6 +17,11 @@ typedef struct dict_s {
     list_t * buck[0];
 } dict_t;
 
+typedef struct item_s {
+    str_t * key;
+    void * data;
+} item_t;
+
 /**
  * @brief hash a key
  *
@@ -34,10 +39,20 @@ size_t hash_key(const char * key);
  * @param key key to check
  * @param buff buffer for the index found
  *
- * @param int 1 or 0
+ * @return 1 or 0
 */
 int key_in_bucket(const list_t * bucket, const char * key, size_t * buff);
 
-// int in_dict(dict_t * dict, char * key, size_t * buff);
+/**
+ * @brief check if a dict contain a key. put the item[key, data] into
+ * buff if buff non-NULL. (do not free the item)
+ *
+ * @param dict target dict
+ * @param key key to check
+ * @param buff buffer for the item
+ *
+ * @return 1 or 0
+*/
+int in_dict(dict_t * dict, char * key, item_t ** buff);
 
 #endif /* MY_DICT */

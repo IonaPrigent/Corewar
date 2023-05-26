@@ -15,7 +15,7 @@ int is_number(const char * str, int sign)
         return 0;
     }
 
-    if ((sign > 0 && *str == '+') || (sign < 0 && *str == '-')) {
+    if ((sign >= 0 && *str == '+') || (sign <= 0 && *str == '-')) {
         str++;
     }
 

@@ -28,6 +28,8 @@ void * mem_set(void * dst, int c, size_t n);
 char * my_itoa(long int nbr);
 char * my_ftoa(double nbr, int precision);
 
+long int my_atoi(const char * str);
+
 double power(int x, int p);
 
 void * vfree(size_t n, ...);
@@ -36,5 +38,7 @@ void * try_free(void * ptr);
 
 list_str_t * split(str_t * str, const char * sep, int clean, int keepquote);
 list_str_t * filter(list_str_t * list);
+
+size_t str_count_char(const char * str, char c);
 
 #endif /* MY_UTILS */
