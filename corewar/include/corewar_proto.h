@@ -21,6 +21,7 @@ int vm_core(int ac, char const *av[]);
 *   get value placed in the main memory
 */
 int get_value_from_mem(octet_t const *memory, int *i, int size);
+void read_mem(void *buffer, char mem[MEM_SIZE], int index, size_t size);
 
     #define GET_MEM_IND(mem, index) (get_value_from_mem(mem, index, IND_SIZE))
     #define GET_MEM_DIR(mem, index) (get_value_from_mem(mem, index, DIR_SIZE))
@@ -51,6 +52,11 @@ void display_memory(octet_t memory[]);
 int init_all(corewar_t *core, char const *av[]);
 int get_program(int fd, process_t *process, char mem[MEM_SIZE],
 header_t *header);
+
+
+/*
+*   utils
+*/
 void reverse(void *nbr, size_t size);
 void copy(void *dest, void *src, size_t size);
 
@@ -62,6 +68,7 @@ corewar_t *corewar_store(void);
 int exec_instruction(corewar_t *core, process_t *process);
 void reset_process(process_t *process, int i);
 int run_corewar(corewar_t *core, long dump);
+bool check_all_param_reg(int parameters);
 
 
 #endif /* !COREWAR_PROTO_H_ */

@@ -23,12 +23,12 @@ int long_load_index(octet_t memory[MEM_SIZE], process_t *process)
     value = get_value_from_param_ind
     (memory, FSRT_PARAM(parameters), process->registers, &i);
     value = (process->PC + value) % MEM_SIZE;
-    value = GET_MEM_IND(memory, &value);
+    read_mem(&value, memory, value, IND_SIZE);
     value += get_value_from_param_ind
     (memory, SECO_PARAM(parameters), process->registers, &i);
     value = (process->PC + value) % MEM_SIZE;
-    value = GET_MEM_DIR(memory, &value);
-    set_register(process, GET_OCTET(memory, i), value, true);
+    read_mem(&value, memory, value, REG_SIZE);
+    set_register(process, GET_OCTET(memory, i) - 1, value, true);
     reset_process(process, i + 1);
     return SUCESS;
 }

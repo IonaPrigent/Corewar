@@ -11,6 +11,16 @@
 #include "corewar_proto.h"
 #include "macros.h"
 
+bool check_all_param_reg(int parameters)
+{
+    if (THRD_PARAM(parameters) != PARAM_REG
+    || SECO_PARAM(parameters) != PARAM_REG
+    || FSRT_PARAM(parameters) != PARAM_REG) {
+        return ERROR;
+    }
+    return SUCESS;
+}
+
 int add(octet_t memory[MEM_SIZE], process_t *process)
 {
     int i = process->PC + 2;
@@ -22,15 +32,15 @@ int add(octet_t memory[MEM_SIZE], process_t *process)
 
     if (process->wait < op_tab[ADD].nbr_cycles)
         return SUCESS;
-    if (THRD_PARAM(parameters) != PARAM_REG
-    || SECO_PARAM(parameters) != PARAM_REG
-    || FSRT_PARAM(parameters) != PARAM_REG)
+    if (check_all_param_reg(parameters))
         return ERROR;
     reg_id1 = GET_OCTET(memory, i);
     reg_id2 = GET_OCTET(memory, i + 1);
     reg_id3 = GET_OCTET(memory, i + 2);
-    result = process->registers[reg_id2] + process->registers[reg_id1];
-    set_register(process, reg_id3, result, true);
+    if (!IS_REG(reg_id1) || !IS_REG(reg_id2) || !IS_REG(reg_id3))
+        return ERROR;
+    result = process->registers[reg_id2 - 1] + process->registers[reg_id1 - 1];
+    set_register(process, reg_id3 - 1, result, true);
     reset_process(process, i + 3);
     return SUCESS;
 }
