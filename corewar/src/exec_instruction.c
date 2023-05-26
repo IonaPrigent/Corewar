@@ -58,7 +58,7 @@ int run_corewar(corewar_t *core, long dump)
             exec_instruction(core, &(core->processes[j]));
         }
     }
-    if (i == dump) {
+    if (i != dump) {
         display_memory(core->mem);
     }
     return 0;
