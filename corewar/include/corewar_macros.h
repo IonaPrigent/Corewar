@@ -22,6 +22,23 @@
     #define FRTH_PARAM(param) (param & PARAM_MASK)
     #define IS_REG(reg) (0 < reg && reg <= REG_NUMBER)
 
+    #define GET_FST_PAR_IND(mem, p, regs, i)\
+            (get_from_param_ind(mem, FSRT_PARAM(p), regs, i))
+
+    #define GET_SEC_PAR_IND(mem, p, regs, i)\
+            (get_from_param_ind(mem, SECO_PARAM(p), regs, i))
+
+    #define GET_TRD_PAR_IND(mem, p, regs, i)\
+            (get_from_param_dir(mem, THRD_PARAM(p), regs, i))
+
+    #define GET_FST_PAR_DIR(mem, p, regs, i)\
+            (get_from_param_dir(mem, FSRT_PARAM(p), regs, i))
+
+    #define GET_SEC_PAR_DIR(mem, p, regs, i)\
+            (get_from_param_dir(mem, SECO_PARAM(p), regs, i))
+
+    #define GET_TRD_PAR_DIR(mem, p, regs, i)\
+            (get_from_param_dir(mem, THRD_PARAM(p), regs, i))
 
     #define REG_LEN 1
     #define IND_LEN IND_SIZE

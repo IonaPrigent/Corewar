@@ -37,9 +37,9 @@ int store_index(octet_t memory[MEM_SIZE], process_t *process)
     if (!IS_REG(reg_id))
         return ERROR;
     i += REG_LEN;
-    index += (short)get_value_from_param_ind(memory, SECO_PARAM(parameters),
+    index += (short)get_from_param_ind(memory, SECO_PARAM(parameters),
     process->registers, &i);
-    index += (short)get_value_from_param_ind(memory, THRD_PARAM(parameters),
+    index += (short)get_from_param_ind(memory, THRD_PARAM(parameters),
     process->registers, &i);
     index = (index % IDX_MOD + process->PC) % MEM_SIZE;
     place_memory(memory, process->registers[reg_id - 1], index);

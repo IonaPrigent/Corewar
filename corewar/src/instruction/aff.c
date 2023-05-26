@@ -14,15 +14,19 @@
 
 int affich(octet_t memory[MEM_SIZE], process_t *process)
 {
-    int reg_id = GET_OCTET(memory, process->PC + 1);
+    int param = PARAMETERS(memory, process->PC);
+    char c;
+    int reg_id = GET_OCTET(memory, process->PC + 2);
 
     if (process->wait < op_tab[AFF].nbr_cycles)
         return SUCESS;
-    if (!IS_REG(reg_id)) {
+    if (!IS_REG(reg_id) || param != 0x40) {
         return ERROR;
     }
     --reg_id;
-    write(STDOUT_FILENO, &(process->registers[reg_id]), 1);
+    c = process->registers[reg_id] % 256;
+    dprintf(2, "%.2hhx", c);
+    write(STDOUT_FILENO, &c, 1);
     reset_process(process, 2);
     return SUCESS;
 }

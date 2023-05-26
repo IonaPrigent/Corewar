@@ -22,7 +22,7 @@ int long_load(octet_t memory[MEM_SIZE], process_t *process)
         return SUCESS;
     if (SECO_PARAM(param) != PARAM_REG)
         return ERROR;
-    index = get_value_from_param(memory, FSRT_PARAM(param),
+    index = get_from_param_dir(memory, FSRT_PARAM(param),
     process->registers, &i);
     reg_id = GET_OCTET(memory, i);
     ++i;

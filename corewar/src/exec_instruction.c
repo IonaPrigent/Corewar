@@ -52,13 +52,13 @@ int run_corewar(corewar_t *core, long dump)
     long i = 0;
 
     for (; i != dump && is_finished(core) == false ; ++i) {
-        if (i < 0)
+        if (i + 1 < 0)
             i = 0;
         for (int j = 0; j < core->nb_processes; ++j) {
             exec_instruction(core, &(core->processes[j]));
         }
     }
-    if (i != dump) {
+    if (i == dump) {
         display_memory(core->mem);
     }
     return 0;

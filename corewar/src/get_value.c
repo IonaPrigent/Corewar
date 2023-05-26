@@ -31,7 +31,7 @@ void reset_process(process_t *process, int i)
     process->wait = 0;
 }
 
-int get_value_from_param(octet_t const *memory, octet_t param,
+int get_from_param_dir(octet_t const *memory, octet_t param,
 int reg[], int *i)
 {
     switch (param) {
@@ -48,7 +48,7 @@ int reg[], int *i)
     return 0;
 }
 
-int get_value_from_param_ind(octet_t const *memory, octet_t param,
+int get_from_param_ind(octet_t const *memory, octet_t param,
 int reg[], int *i)
 {
     switch (param) {

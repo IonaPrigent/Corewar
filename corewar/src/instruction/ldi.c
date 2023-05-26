@@ -30,11 +30,11 @@ int load_index(octet_t memory[MEM_SIZE], process_t *process)
         return SUCESS;
     if (THRD_PARAM(parameters) != PARAM_REG)
         return ERROR;
-    value = get_value_from_param_ind
+    value = get_from_param_ind
     (memory, FSRT_PARAM(parameters), process->registers, &i);
     value = (process->PC + value % IDX_MOD) % MEM_SIZE;
     read_mem(&value, memory, value, IND_SIZE);
-    value += get_value_from_param_ind
+    value += get_from_param_ind
     (memory, SECO_PARAM(parameters), process->registers, &i);
     value = (process->PC + value % IDX_MOD) % MEM_SIZE;
     read_mem(&value, memory, value, REG_SIZE);

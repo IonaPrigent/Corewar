@@ -28,7 +28,7 @@ int reg_id, int i)
 static int store_in_mem(char mem[MEM_SIZE], process_t *process,
 int reg_id, int i)
 {
-    int index = (short)get_value_from_param_ind(mem, PARAM_IND,
+    int index = (short)get_from_param_ind(mem, PARAM_IND,
     process->registers, &i);
 
     index = (index % IDX_MOD + process->PC) % MEM_SIZE;

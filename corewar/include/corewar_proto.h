@@ -29,10 +29,10 @@ void read_mem(void *buffer, char mem[MEM_SIZE], int index, size_t size);
 /*
 *   get parameter
 */
-int get_value_from_param(octet_t const *memory, octet_t param,
+int get_from_param_dir(octet_t const *memory, octet_t param,
 int reg[], int *i);
 
-int get_value_from_param_ind(octet_t const *memory, octet_t param,
+int get_from_param_ind(octet_t const *memory, octet_t param,
 int reg[], int *i);
 
 /*
