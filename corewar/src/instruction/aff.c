@@ -14,9 +14,9 @@
 
 int affich(octet_t memory[MEM_SIZE], process_t *process)
 {
-    int reg_id = GET_OCTET(memory, process->PC, 1);
+    int reg_id = GET_OCTET(memory, process->PC + 1);
 
-    if (process->wait < 2)
+    if (process->wait < op_tab[AFF].nbr_cycles)
         return SUCESS;
     if (!IS_REG(reg_id)) {
         return ERROR;

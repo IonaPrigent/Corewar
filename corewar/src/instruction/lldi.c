@@ -16,7 +16,7 @@ int long_load_index(octet_t memory[MEM_SIZE], process_t *process)
     int i = process->PC + 2;
     int value = 0;
 
-    if (process->wait < 50)
+    if (process->wait < op_tab[LLDI].nbr_cycles)
         return SUCESS;
     if (THRD_PARAM(parameters) != PARAM_REG)
         return ERROR;
@@ -28,7 +28,7 @@ int long_load_index(octet_t memory[MEM_SIZE], process_t *process)
     (memory, SECO_PARAM(parameters), process->registers, &i);
     value = (process->PC + value) % MEM_SIZE;
     value = GET_MEM_DIR(memory, &value);
-    set_register(process, GET_OCTET(memory, process->PC, i), value, true);
+    set_register(process, GET_OCTET(memory, i), value, true);
     reset_process(process, i + 1);
     return SUCESS;
 }

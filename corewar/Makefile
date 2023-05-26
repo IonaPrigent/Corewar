@@ -58,6 +58,7 @@ SRC	=	$(addprefix src/,	\
 		$(INSTRUCTION_SRC)		\
 		main.c				\
 		)					\
+		op.c				\
 		$(SRC_LIB)
 
 

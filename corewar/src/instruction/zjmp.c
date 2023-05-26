@@ -15,7 +15,7 @@ int zjump(octet_t memory[MEM_SIZE], process_t *process)
     int index = 0;
     int i = process->PC + 1;
 
-    if (process->wait < 20) {
+    if (process->wait < op_tab[ZJUMP].nbr_cycles) {
         return SUCESS;
     }
     if (process->carry != 1) {

@@ -51,7 +51,6 @@ int run_corewar(corewar_t *core, long dump)
 {
     long i = 0;
 
-    dprintf(2, "aze\n%d\n", is_finished(core));
     for (; i != dump && is_finished(core) == false ; ++i) {
         if (i < 0)
             i = 0;
