@@ -16,6 +16,7 @@ int affich(octet_t memory[MEM_SIZE], process_t *process)
 {
     int param = PARAMETERS(memory, process->PC);
     char c;
+    int value;
     int reg_id = GET_OCTET(memory, process->PC + 2);
 
     if (process->wait < op_tab[AFF].nbr_cycles)
@@ -24,8 +25,9 @@ int affich(octet_t memory[MEM_SIZE], process_t *process)
         return ERROR;
     }
     --reg_id;
-    c = process->registers[reg_id] % 256;
-    dprintf(2, "%.2hhx", c);
+    dprintf(2, "reg : %d\n", reg_id);
+    value = process->registers[reg_id] % 256;
+    c = value;
     write(STDOUT_FILENO, &c, 1);
     reset_process(process, 2);
     return SUCESS;

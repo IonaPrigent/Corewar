@@ -45,6 +45,6 @@ int vm_core(int ac, char const *av[])
         return EXIT_ERROR;
     if (init_all(core, av) == ERROR)
         return EXIT_ERROR;
-    run_corewar(core, 100);
+    run_corewar(core, 500);
     return SUCESS;
 }

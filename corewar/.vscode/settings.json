@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "corewar_type.h": "c",
-        "instruction.h": "c"
+        "instruction.h": "c",
+        "stdio.h": "c"
     }
 }

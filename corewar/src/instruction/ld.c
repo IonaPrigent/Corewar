@@ -22,8 +22,7 @@ int load(octet_t memory[MEM_SIZE], process_t *process)
         return SUCESS;
     if (SECO_PARAM(param) != PARAM_REG)
         return ERROR;
-    index = get_from_param_dir(memory, FSRT_PARAM(param),
-    process->registers, &i) % IDX_MOD;
+    index = GET_FST_PAR_DIR(memory, param, process->registers, &i) % IDX_MOD;
     reg_id = GET_OCTET(memory, i);
     ++i;
     if (reg_id == 0)
