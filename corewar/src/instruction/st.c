@@ -10,34 +10,50 @@
 #include "corewar_type.h"
 #include "macros.h"
 
-static void store_in_reg(int registers[REG_NUMBER], int value, int reg)
+static int store_in_reg(char mem[MEM_SIZE], process_t *process,
+int reg_id, int i)
 {
-    if (!IS_REG(reg))
-        return;
-    --reg;
-    registers[reg] = value;
+    int id_dest = GET_OCTET(mem, i);
+
+    if (!IS_REG(id_dest)) {
+        return ERROR;
+    }
+    --id_dest;
+    process->registers[id_dest] = process->registers[reg_id];
+    ++i;
+    reset_process(process, i);
+    return SUCESS;
+}
+
+static int store_in_mem(char mem[MEM_SIZE], process_t *process,
+int reg_id, int i)
+{
+    int index = (short)get_value_from_param_ind(mem, PARAM_IND,
+    process->registers, &i);
+
+    index = (index % IDX_MOD + process->PC) % MEM_SIZE;
+    place_memory(mem, process->registers[reg_id], index);
+    reset_process(process, i);
+    return SUCESS;
 }
 
 int store(octet_t memory[MEM_SIZE], process_t *process)
 {
     octet_t param = PARAMETERS(memory, process->PC);
     int i = process->PC + 2;
-    int register_value = 0;
-    int sec_param = 0;
+    int reg_id;
 
-    if (process->wait < op_tab[ST].nbr_cycles) return SUCESS;
+    if (process->wait < op_tab[ST].nbr_cycles)
+        return SUCESS;
     if (FSRT_PARAM(param) != PARAM_REG)
         return ERROR;
-    register_value = get_value_from_param_ind(memory, FSRT_PARAM(param),
-    process->registers, &i);
+
+    reg_id = GET_OCTET(memory, i);
+    if (!IS_REG(reg_id))
+        return ERROR;
+    i += REG_LEN;
     if (SECO_PARAM(param) == PARAM_REG) {
-        sec_param = memory[(process->PC + i) % MEM_SIZE];
-        store_in_reg(process->registers, register_value, sec_param);
-    } else {
-        sec_param = get_value_from_param_ind(memory, SECO_PARAM(param),
-        process->registers, &i);
-        place_memory(memory, register_value, sec_param);
+        return store_in_reg(memory, process, reg_id - 1, i);
     }
-    reset_process(process, i);
-    return SUCESS;
+    return store_in_mem(memory, process, reg_id - 1, i);
 }

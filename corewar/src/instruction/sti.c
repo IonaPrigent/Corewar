@@ -15,7 +15,9 @@ void place_memory(char memory[MEM_SIZE], int value, int idx)
     octet_t *list = (octet_t *)&value;
 
     reverse(&value, sizeof(value));
-    dprintf(2, "index :%x\n", idx);
+    if (idx < 0) {
+        idx += MEM_SIZE;
+    }
     for (int i = 0; i < REG_SIZE; ++i) {
         memory[idx + i % MEM_SIZE] = list[i];
     }
@@ -28,21 +30,15 @@ int store_index(octet_t memory[MEM_SIZE], process_t *process)
     int i = process->PC + 2;
     int reg_id;
 
-    if (process->wait < op_tab[STI].nbr_cycles)
-        return SUCESS;
+    if (process->wait < op_tab[STI].nbr_cycles) return SUCESS;
     if (FSRT_PARAM(parameters) != PARAM_REG)
         return ERROR;
     reg_id = GET_OCTET(memory, i);
-    if (!IS_REG(reg_id)) {
-        dprintf(2, "reg id :%d\n", reg_id);
+    if (!IS_REG(reg_id))
         return ERROR;
-    }
-    dprintf(2, "sti PC:%x\n", process->PC);
     i += REG_LEN;
     index += (short)get_value_from_param_ind(memory, SECO_PARAM(parameters),
     process->registers, &i);
-    dprintf(2, "PC :%d\n", process->PC);
-    dprintf(2, "index :%d\n", index);
     index += (short)get_value_from_param_ind(memory, THRD_PARAM(parameters),
     process->registers, &i);
     index = (index % IDX_MOD + process->PC) % MEM_SIZE;
