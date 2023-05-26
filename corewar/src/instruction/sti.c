@@ -19,7 +19,7 @@ void place_memory(char memory[MEM_SIZE], int value, int idx)
         idx += MEM_SIZE;
     }
     for (int i = 0; i < REG_SIZE; ++i) {
-        memory[idx + i % MEM_SIZE] = list[i];
+        memory[(idx + i) % MEM_SIZE] = list[i];
     }
 }
 
