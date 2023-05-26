@@ -41,7 +41,7 @@ int load_index(octet_t memory[MEM_SIZE], process_t *process)
     value = GET_MEM_DIR(memory, &value);
     dprintf(2, "final value :%x\n", value % 256); // satine : 104
 
-    set_register(process, GET_OCTET(memory, process->PC, i), value, true);
+    set_register(process, GET_OCTET(memory, i), value, true);
     reset_process(process, i + 1);
     return SUCESS;
 }

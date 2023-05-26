@@ -24,7 +24,7 @@ int long_load(octet_t memory[MEM_SIZE], process_t *process)
         return ERROR;
     index = get_value_from_param(memory, FSRT_PARAM(param),
     process->registers, &i);
-    reg_id = GET_OCTET(memory, process->PC, i);
+    reg_id = GET_OCTET(memory, i);
     ++i;
     if (reg_id == 0)
         return ERROR;

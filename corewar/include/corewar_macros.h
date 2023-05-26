@@ -14,8 +14,8 @@
 
     #define PARAM_MASK 0b11
 
-    #define GET_OCTET(mem, PC, i) (mem[(PC + i) % MEM_SIZE])
-    #define PARAMETERS(mem, PC) (GET_OCTET(mem, PC, 1))
+    #define GET_OCTET(mem, i) (mem[i % MEM_SIZE])
+    #define PARAMETERS(mem, PC) (GET_OCTET(mem, PC + 1))
     #define FSRT_PARAM(param) ((param >> 6) & PARAM_MASK)
     #define SECO_PARAM(param) ((param >> 4) & PARAM_MASK)
     #define THRD_PARAM(param) ((param >> 2) & PARAM_MASK)

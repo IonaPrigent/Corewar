@@ -43,6 +43,7 @@ int exec_instruction(corewar_t *core, process_t *process)
         process->PC = (process->PC + 1) % MEM_SIZE;
         return SUCESS;
     }
+    dprintf(2, "aze:%.2x, PC:%x\n", instruction, process->PC);
     all_instruction[(int)instruction - 1](core->mem, process);
     return SUCESS;
 }
@@ -51,7 +52,7 @@ int run_corewar(corewar_t *core, long dump)
 {
     long i = 0;
 
-    dprintf(2, "aze\n%d\n", is_finished(core));
+    dprintf(2, "%d\n", core->nb_processes);
     for (; i != dump && is_finished(core) == false ; ++i) {
         if (i < 0)
             i = 0;
