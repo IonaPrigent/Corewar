@@ -33,20 +33,6 @@ static int helper(void)
     return SUCESS;
 }
 
-void read_name(int const fd, process_t *process)
-{
-    char c;
-    int len_name = 0;
-
-    while (read(fd, &c, 1) && c != 0) {
-        ++len_name;
-        process->name = realloc(process->name, len_name);
-        process->name[len_name - 1] = c;
-    }
-    process->name = realloc(process->name, len_name);
-    process->name[len_name - 1] = c;
-}
-
 int vm_core(int ac, char const *av[])
 {
     corewar_t *core = corewar_store();
@@ -59,6 +45,6 @@ int vm_core(int ac, char const *av[])
         return EXIT_ERROR;
     if (init_all(core, av) == ERROR)
         return EXIT_ERROR;
-    display_memory(core->mem);
+    run_corewar(core, op_tab[LLDI].nbr_cycles + op_tab[ST].nbr_cycles + 1);
     return SUCESS;
 }

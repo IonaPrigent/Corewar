@@ -10,6 +10,7 @@
 #include "corewar_proto.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 int lfork(octet_t mem[MEM_SIZE], process_t *process)
 {
@@ -17,15 +18,17 @@ int lfork(octet_t mem[MEM_SIZE], process_t *process)
     int i = process->PC + 1;
     int index = GET_MEM_IND(mem, &i);
 
+    if (process->wait < op_tab[LFORK].nbr_cycles)
+        return SUCESS;
     core->nb_processes += 1;
     core->processes = realloc(core->processes,
     sizeof(process_t) * core->nb_processes);
-    if (core->processes == NULL) {
+    if (core->processes == NULL)
         return ERROR;
-    }
-    core->processes[core->nb_processes - 1] = *process;
+    copy(&core->processes[core->nb_processes - 1], process, sizeof(process_t));
     core->processes[core->nb_processes - 1].wait = 0;
     core->processes[core->nb_processes - 1].PC = process->PC + index;
     core->processes[core->nb_processes - 1].PC %= MEM_SIZE;
+    reset_process(process, i);
     return SUCESS;
 }
