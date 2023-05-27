@@ -31,14 +31,13 @@ int main(int ac, const char * const * av)
         return SUCCESS;
     }
     champ = parse_asm(av[1]);
-    if (champ == NULL) {
-        dprint(2, "%s\n", RED_ERROR);
+    if (champ == NULL)
         return ERROR;
-    }
     if (write_champ(av[1], champ) == ERROR) {
         free_champ(champ);
         return ERROR;
     }
+    free_champ(champ);
     dprint(2, "%sdone.%s\n", GREEN, RESET);
     return SUCCESS;
 }

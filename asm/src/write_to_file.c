@@ -31,8 +31,10 @@ int write_champ(const char * filename, champ_t * champ)
     }
     append(&str, ".cor");
     file = fopen(str->data, "w");
-    if (file == NULL)
+    if (file == NULL) {
+        dprint(2, "%sCan't open file %s.\n", RED_ERROR, str->data);
         return ERROR;
+    }
 
     fwrite(champ->hdr, sizeof(header_t), 1, file);
     write_cmd(champ->cmd, file);

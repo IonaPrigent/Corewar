@@ -102,7 +102,6 @@ static int is_valid_ind(str_t * arg, int * op_info, dict_t * label,
 
 int valid_arg(str_t * arg, int * op_info, dict_t * label, list_t * cmd)
 {
-    printf(":%s:\n", op_tab[op_info[0]].mnemonique);
     if (arg->data[0] == 'r') {
         if (!(op_tab[op_info[0]].type[op_info[1]] & T_REG)) {
             write_error("The instruction does not support registers.");
