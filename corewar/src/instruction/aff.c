@@ -25,7 +25,6 @@ int affich(octet_t memory[MEM_SIZE], process_t *process)
         return ERROR;
     }
     --reg_id;
-    dprintf(2, "reg : %d\n", reg_id);
     value = process->registers[reg_id] % 256;
     c = value;
     write(STDOUT_FILENO, &c, 1);

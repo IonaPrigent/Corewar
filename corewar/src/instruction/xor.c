@@ -19,13 +19,13 @@ int xor_fct(octet_t memory[MEM_SIZE], process_t *process)
     int result_2 = 0;
     int reg_id3 = 0;
     int result = 0;
+
     if (process->wait < op_tab[ADD].nbr_cycles)
         return SUCESS;
     if (THRD_PARAM(parameters) != PARAM_REG)
         return ERROR;
     result_1 = GET_FST_PAR_IND(memory, parameters, process->registers, &i);
     result_2 = GET_SEC_PAR_IND(memory, parameters, process->registers, &i);
-    dprintf(2, "result 1 : %x; result 2 : %x\n", result_1, result_2);
     reg_id3 = GET_OCTET(memory, i);
     if (!IS_REG(reg_id3))
         return ERROR;

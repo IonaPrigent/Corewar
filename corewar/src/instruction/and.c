@@ -29,7 +29,7 @@ int and_fct(octet_t memory[MEM_SIZE], process_t *process)
     reg_id3 = GET_OCTET(memory, i);
     if (!IS_REG(reg_id3))
         return ERROR;
-    result = result_1 ^ result_2;
+    result = result_1 & result_2;
     set_register(process, reg_id3 - 1, result, true);
     reset_process(process, i + 1);
     return SUCESS;

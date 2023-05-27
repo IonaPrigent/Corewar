@@ -37,7 +37,7 @@ int reg[], int *i)
     switch (param) {
     case PARAM_REG:
         *i += 1;
-        return (!IS_REG(memory[*i - 1])) ? reg[memory[*i] - 1] : ERROR;
+        return (IS_REG(memory[*i - 1])) ? reg[memory[*i] - 1] : ERROR;
     case PARAM_IND:
         return GET_MEM_IND(memory, i);
     case PARAM_DIR:
@@ -54,14 +54,10 @@ int reg[], int *i)
     switch (param) {
     case PARAM_REG:
         *i += 1;
-        dprintf(2, "get param : reg : %.2x\n", memory[*i - 1]);
-        dprintf(2, "value reg : %x\n", reg[(int)memory[*i - 1] - 1]);
-        return (!IS_REG(memory[*i - 1])) ? reg[memory[*i - 1] - 1] : ERROR;
+        return (IS_REG(memory[*i - 1])) ? reg[memory[*i - 1] - 1] : ERROR;
     case PARAM_DIR:
     case PARAM_IND:
-        int value = GET_MEM_IND(memory, i);
-        dprintf(2, "value : %x\n", value);
-        return value;
+        return GET_MEM_IND(memory, i);
     default:
         break;
     }
