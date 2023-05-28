@@ -25,7 +25,7 @@ int load(octet_t memory[MEM_SIZE], process_t *process)
     index = GET_FST_PAR_DIR(memory, param, process->registers, &i) % IDX_MOD;
     reg_id = GET_OCTET(memory, i);
     ++i;
-    if (reg_id == 0)
+    if (!IS_REG(reg_id))
         return ERROR;
     reg_id -= 1;
     index = (index + process->PC) % MEM_SIZE;

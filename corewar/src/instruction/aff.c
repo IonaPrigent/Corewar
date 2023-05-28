@@ -28,6 +28,6 @@ int affich(octet_t memory[MEM_SIZE], process_t *process)
     value = process->registers[reg_id] % 256;
     c = value;
     write(STDOUT_FILENO, &c, 1);
-    reset_process(process, 2);
+    reset_process(process, process->PC + 3);
     return SUCESS;
 }

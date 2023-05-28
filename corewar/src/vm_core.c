@@ -46,5 +46,7 @@ int vm_core(int ac, char const *av[])
     if (init_all(core, av) == ERROR)
         return EXIT_ERROR;
     run_corewar(core, 1000);
+    free(core->all_names);
+    free(core->processes);
     return SUCESS;
 }

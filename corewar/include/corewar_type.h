@@ -20,7 +20,14 @@ typedef indirect_t indexe_t;
 typedef struct name {
     char name[PROG_NAME_LENGTH + 1];
     int id;
+    int time_left;
 } name_t;
+
+typedef struct p_file {
+    char *file_name;
+    int num;
+    int base_pc;
+} p_file_t;
 
 typedef struct process {
     int PC;
