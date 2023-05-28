@@ -31,7 +31,7 @@ bool is_finished(corewar_t *core)
     return true;
 }
 
-int exec_instruction(corewar_t *core, process_t *process)
+static int exec_instruction(corewar_t *core, process_t *process)
 {
     octet_t instruction = core->mem[process->PC];
 
@@ -39,7 +39,7 @@ int exec_instruction(corewar_t *core, process_t *process)
     if (process->time_left < 0) {
         return SUCESS;
     }
-    process->time_left -= 1;
+    process->time_left -= core->cycle_delta;
     if (!IS_INSTRUCTION(instruction)) {
         process->PC = (process->PC + 1) % MEM_SIZE;
         return SUCESS;
@@ -51,7 +51,7 @@ static void update_names(corewar_t *core)
 {
     for (int j = 0; j < core->nb_original_prog; ++j) {
         if (core->all_names[j].time_left > 0) {
-            core->all_names[j].time_left -= 1;
+            core->all_names[j].time_left -= core->cycle_delta;
         }
     }
 }
@@ -59,7 +59,7 @@ static void update_names(corewar_t *core)
 static void display_winner(corewar_t *core)
 {
     for (int i = 0; i < core->nb_original_prog; ++i) {
-        if (core->all_names[i].time_left > 0) {
+        if (core->all_names[i].time_left > -1) {
             my_putstr("Le joueur ");
             my_putnbr(core->all_names[i].id);
             my_putstr(" (");
@@ -73,14 +73,16 @@ static void display_winner(corewar_t *core)
 int run_corewar(corewar_t *core, long dump)
 {
     long i = 0;
+    bool run = true;
 
-    for (; i != dump && is_finished(core) == false ; ++i) {
+    for (; i != dump && run; ++i) {
         if (i + 1 < 0)
             i = 0;
-        for (int j = 0; j < core->nb_processes; ++j) {
-            exec_instruction(core, &(core->processes[j]));
+        for (int j = 0; j < core->nb_prog && run; ++j) {
+            exec_instruction(core, &(core->progs[j]));
+            run = !is_finished(core);
         }
-        
+        update_names(core);
     }
     if (is_finished(core)) {
         display_winner(core);

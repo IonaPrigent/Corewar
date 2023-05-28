@@ -36,8 +36,8 @@ static int helper(void)
 int vm_core(int ac, char const *av[])
 {
     corewar_t *core = corewar_store();
-    core->nb_processes = 0;
-    core->processes = 0;
+    core->nb_prog = 0;
+    core->progs = 0;
 
     if (ac == 2 && my_strcmp(av[1], "-h") == 0)
         return helper();
@@ -45,8 +45,10 @@ int vm_core(int ac, char const *av[])
         return EXIT_ERROR;
     if (init_all(core, av) == ERROR)
         return EXIT_ERROR;
-    run_corewar(core, 1000);
+    core->cycle_delta = 1;
+    core->nb_live_called = 0;
+    run_corewar(core, is_dash_dump_on(av));
     free(core->all_names);
-    free(core->processes);
+    free(core->progs);
     return SUCESS;
 }

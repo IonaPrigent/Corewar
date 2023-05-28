@@ -35,11 +35,11 @@ int live(octet_t memory[MEM_SIZE], process_t *process)
             core->all_names[j].time_left = CYCLE_TO_DIE;
         }
     }
-    for (int i = 0; i < core->nb_processes; ++i) {
-        if (core->processes[i].registers[0] == player_number) {
-            core->processes[i].time_left = CYCLE_TO_DIE;
-        }
-    }
+    core->nb_live_called += 1;
+    core->cycle_delta = (core->nb_live_called >= NBR_LIVE) ? CYCLE_DELTA : 1;
+    for (int i = 0; i < core->nb_prog; ++i)
+        if (core->progs[i].registers[0] == player_number)
+            core->progs[i].time_left = CYCLE_TO_DIE;
     reset_process(process, process->PC + 5);
     return SUCESS;
 }

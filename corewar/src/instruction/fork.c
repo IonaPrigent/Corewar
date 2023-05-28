@@ -24,14 +24,13 @@ int fork_fct(octet_t mem[MEM_SIZE], process_t *process)
         return SUCESS;
     copy(&tmp, process, sizeof(process_t));
     reset_process(process, i);
-    core->nb_processes += 1;
-    core->processes = realloc(core->processes,
-    sizeof(process_t) * core->nb_processes);
-    if (core->processes == NULL)
+    core->nb_prog += 1;
+    core->progs = realloc(core->progs, sizeof(process_t) * core->nb_prog);
+    if (core->progs == NULL)
         return ERROR;
-    copy(&core->processes[core->nb_processes - 1], &tmp, sizeof(process_t));
-    core->processes[core->nb_processes - 1].wait = 0;
-    core->processes[core->nb_processes - 1].PC = tmp.PC + index % IDX_MOD;
-    core->processes[core->nb_processes - 1].PC %= MEM_SIZE;
+    copy(&core->progs[core->nb_prog - 1], &tmp, sizeof(process_t));
+    core->progs[core->nb_prog - 1].wait = 0;
+    core->progs[core->nb_prog - 1].PC = tmp.PC + index % IDX_MOD;
+    core->progs[core->nb_prog - 1].PC %= MEM_SIZE;
     return SUCESS;
 }

@@ -39,9 +39,11 @@ typedef struct process {
 } process_t;
 
 typedef struct corewar {
-    process_t *processes;
+    int cycle_delta;
+    int nb_live_called;
+    process_t *progs;
     name_t *all_names;
-    int nb_processes;
+    int nb_prog;
     int nb_original_prog;
     char mem[MEM_SIZE];
     char const **filenames;

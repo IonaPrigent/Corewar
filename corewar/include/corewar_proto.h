@@ -65,7 +65,6 @@ corewar_t *corewar_store(void);
 /*
 *   run operations
 */
-int exec_instruction(corewar_t *core, process_t *process);
 void reset_process(process_t *process, int i);
 int run_corewar(corewar_t *core, long dump);
 bool check_all_param_reg(int parameters);
