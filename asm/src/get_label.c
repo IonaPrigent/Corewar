@@ -40,8 +40,8 @@ dict_t * get_label(list_str_t * text)
         }
         if (valid_label(dict, delete(line->data[0], line->data[0]->len))) {
             vec = VEC(sizeof(long), 4);
-            append(&vec, &i);
-            append(&dict, line->data[0]->data, vec);
+            append(&vec, &i); append(&dict, line->data[0]->data, vec);
+            destroy(line);
         } else
             return obj_vfree(2, dict, line);
     }

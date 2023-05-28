@@ -30,13 +30,16 @@ static int valid_command_args(list_str_t * args, int op_idx, list_t * cmd,
     if (op_tab[op_idx].nbr_args != (char) args->len) {
         dprint(2, "%sWrong number of arguments for the operation \"%s\".\n",
         RED_ERROR, op_tab[op_idx].mnemonique);
+        destroy(args);
         return 1;
     }
     for (size_t i = 0; i < args->len; i++) {
         if (valid_arg(args->data[i], (int[2]){op_idx, i}, label, cmd) == 1) {
+            destroy(args);
             return 1;
         }
     }
+    destroy(args);
     return 0;
 }
 

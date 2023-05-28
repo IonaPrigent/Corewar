@@ -1,0 +1,29 @@
+# Object files
+*.o
+
+# Libraries
+libmy.a
+
+# Executables
+*.exe
+*.out
+
+# Valgrind core dump files
+*.vgcore
+
+# Coverage files
+*.gcda
+*.gcno
+
+# Tests
+*test*
+
+# Json bear compiler
+compile_commands.json
+
+# vscode files
+.vscode
+
+# ASM files
+*.cor
+*.s
