@@ -79,13 +79,6 @@ clean:
 fclean:	clean
 	rm -f $(NAME)
 
-debug:	CFLAGS += -g3 -fsanitize=address
-debug:	CC = clang
-debug:	LDFLAGS += -fsanitize=address
-debug:	re
-
-redebug:	fclean debug
-
 re:	fclean all
 
-.PHONY: all clean fclean re debug redebug
+.PHONY: all clean fclean re
