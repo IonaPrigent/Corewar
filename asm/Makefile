@@ -55,7 +55,6 @@ clean:
 
 fclean:	clean
 	@ $(RM) $(BIN_NAME) $(LIB_NAME)
-	clear
 
 re: fclean all
 
